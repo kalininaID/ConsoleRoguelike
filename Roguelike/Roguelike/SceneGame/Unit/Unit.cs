@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Roguelike
 {
-    internal class Unit
+    public class Unit
     {
         public int hp;
         public int damage;
+        public char img;
 
         public void Die()
         {

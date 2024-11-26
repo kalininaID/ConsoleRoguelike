@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roguelike
 {
-    internal class Player : Unit
+    public class Player : Unit
     {
         public int level;
         public int experience;
@@ -16,11 +16,16 @@ namespace Roguelike
         {
             this.hp = hp;
             this.damage = damage;
+            img = '*';
             level = 1;
             experience = 0;
             Inventory = [];
         }
 
+        public char DrawPlayer()
+        {
+            return img;
+        }
         public void UseItem(string item)
         {
             if (Inventory.Contains(item))

@@ -5,20 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Roguelike.SceneGame.Location
+namespace Roguelike
 {
-    internal class Level
+    public class Level
     {
         private int levelWidth;
         private int levelHeight;
         private char[][] map;
         private List<Room> rooms;
 
-        public Level(int levelWidth, int levelHeight)
+        private Player player1;
+        bool spawnPlayer = false;
+
+        public Level(int levelWidth, int levelHeight, Player player1)
         {
             this.levelWidth = levelWidth;
             this.levelHeight = levelHeight;
+            this.player1 = player1;
+
             map = Frame.DrawFrame(levelWidth, levelHeight);
+            
             rooms = new List<Room>();
         }
 
@@ -28,7 +34,6 @@ namespace Roguelike.SceneGame.Location
 
             for (int i = 0; i < roomCount; i++)
             {
-                //генерация размера комнат
                 int roomWidth = rand.Next(6, 15);
                 int roomHeight = rand.Next(6, 10);
 
@@ -67,7 +72,6 @@ namespace Roguelike.SceneGame.Location
             }
             return true;
         }
-
         private void DrawRoom(Room room)
         {
             for (int i = 0; i < room.height; i++)
@@ -81,7 +85,14 @@ namespace Roguelike.SceneGame.Location
                     if (mapY >= 0 && mapY < map.Length && mapX >= 0 && mapX < map[0].Length)
                     {
                         // Заполняем массив map символами из рамки комнаты
-                        map[mapY][mapX] = room.frame[i][j];
+                        if (map[mapY][mapX] != player1.DrawPlayer()) 
+                            map[mapY][mapX] = room.frame[i][j];
+
+                        if (!spawnPlayer) 
+                        { 
+                            map[mapY + 2][mapX + 2] = player1.DrawPlayer();
+                            spawnPlayer = true;
+                        }
                     }
                 }
             }
@@ -90,17 +101,14 @@ namespace Roguelike.SceneGame.Location
         {
             
         }
-
         private void DrawHorizontalTunnel(int xStart, int xEnd, int y)
         {
            
         }
-
         private void DrawVerticalTunnel(int yStart, int yEnd, int x)
         {
            
         }
-
         public void PrintLevel()
         {
 
