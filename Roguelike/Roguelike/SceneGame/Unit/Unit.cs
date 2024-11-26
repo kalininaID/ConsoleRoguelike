@@ -8,5 +8,27 @@ namespace Roguelike
 {
     internal class Unit
     {
+        public int hp;
+        public int damage;
+
+        public void Die()
+        {
+        }
+
+        public void TakeHit(int damage)
+        {
+            hp -= damage;
+
+            if (hp < 0)
+            {
+                Die();
+            }
+        }
+        public void Attack()
+        {
+        }
+        public void Draw()
+        {
+        }
     }
 }

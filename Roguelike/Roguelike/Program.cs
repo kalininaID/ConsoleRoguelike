@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roguelike.SceneGame.Location;
+using System;
 
 namespace Roguelike
 {
@@ -11,6 +12,13 @@ namespace Roguelike
 
             Menu menu = new Menu();
             menu.Run();
+
+            /*char [][] room1 = Room.DrawFrame(20, 15);
+            Room.PrintRoom(room1);*/
+/*
+            Level level = new Level(80, 40);
+            level.GenerateLevel(2); // Генерируем 5 комнат
+            level.PrintLevel();*/
         }
     }
 }
