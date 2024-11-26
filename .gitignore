@@ -1,15 +1,21 @@
-# Visual Studio
-.vs/
-*.sln
-*.user
-*.suo
-*.userprefs
-*.csproj.user
-*.csproj.nuget.g.props
-*.csproj.nuget.g.targets
+# Игнорируем все файлы и папки
+*
 
-# Visual Studio
-.Roguelike/bin
-.Roguelike/obj
-.Roguelike/Roguelike/obj
-.Roguelike/Roguelike/bin
+# Исключаем папку Components
+!Roguelike/Roguelike/Components/
+!Roguelike/Roguelike/Components/**
+
+!Roguelike/Roguelike/Data/
+!Roguelike/Roguelike/Data/**
+
+!Roguelike/Roguelike/SceneGame/
+!Roguelike/Roguelike/SceneGame/**
+
+!Roguelike/Roguelike/SceneMenu/
+!Roguelike/Roguelike/SceneMenu/**
+
+!Roguelike/Roguelike/Utils/
+!Roguelike/Roguelike/Utils/**
+
+!Roguelike/Roguelike/Program.cs
+!Roguelike/Roguelike/SceneManager.cs
