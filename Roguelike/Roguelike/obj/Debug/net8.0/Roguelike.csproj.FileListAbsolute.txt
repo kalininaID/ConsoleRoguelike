@@ -1,0 +1,15 @@
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\bin\Debug\net8.0\Roguelike.exe
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\bin\Debug\net8.0\Roguelike.deps.json
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\bin\Debug\net8.0\Roguelike.runtimeconfig.json
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\bin\Debug\net8.0\Roguelike.dll
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\bin\Debug\net8.0\Roguelike.pdb
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.GeneratedMSBuildEditorConfig.editorconfig
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.AssemblyInfoInputs.cache
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.AssemblyInfo.cs
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.csproj.CoreCompileInputs.cache
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.sourcelink.json
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.dll
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\refint\Roguelike.dll
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.pdb
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\Roguelike.genruntimeconfig.cache
+E:\Git\ConsoleRoguelike\Roguelike\Roguelike\obj\Debug\net8.0\ref\Roguelike.dll
