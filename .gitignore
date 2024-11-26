@@ -3,22 +3,15 @@
 
 # Исключаем папку Components
 !Roguelike/Roguelike/Components/
-!Roguelike/Roguelike/Components/**
-
-!Roguelike/Roguelike/Data/
-!Roguelike/Roguelike/Data/**
-
-!Roguelike/Roguelike/SceneGame/
-!Roguelike/Roguelike/SceneGame/**
-
-!Roguelike/Roguelike/SceneMenu/
-!Roguelike/Roguelike/SceneMenu/**
-
-!Roguelike/Roguelike/Utils/
-!Roguelike/Roguelike/Utils/**
-
+!/Roguelike/Roguelike/Data/
+!/Roguelike/Roguelike/SceneGame/
+!/Roguelike/Roguelike/SceneMenu/
+!/Roguelike/Roguelike/Utils/
 !Roguelike/Roguelike/Program.cs
 !Roguelike/Roguelike/SceneManager.cs
+
 Roguelike/.vs/Roguelike/v17/.suo
 Roguelike/.vs/Roguelike/v17/DocumentLayout.backup.json
 Roguelike/.vs/Roguelike/v17/DocumentLayout.json
+/Roguelike/Roguelike/obj/Debug
+/Roguelike/.vs/Roguelike/v17
