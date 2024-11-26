@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roguelike.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,19 +18,7 @@ namespace Roguelike.SceneGame.Location
         {
             this.levelWidth = levelWidth;
             this.levelHeight = levelHeight;
-
-            map = new char[levelHeight][];
-
-            for (int i = 0; i < levelHeight; i++)
-            {
-                map[i] = new char[levelWidth];
-                for (int j = 0; j < levelWidth; j++)
-                {
-                    map[i][j] = ' '; // Заполняем стены
-                }
-            }
-
-
+            map = Frame.DrawFrame(levelWidth, levelHeight);
             rooms = new List<Room>();
         }
 
@@ -39,19 +28,30 @@ namespace Roguelike.SceneGame.Location
 
             for (int i = 0; i < roomCount; i++)
             {
-                int roomWidth = rand.Next(3, 6);
-                int roomHeight = rand.Next(3, 6);
-                int x = rand.Next(1, levelWidth - roomWidth - 1);
-                int y = rand.Next(1, levelHeight - roomHeight - 1);
+                //генерация размера комнат
+                int roomWidth = rand.Next(6, 15);
+                int roomHeight = rand.Next(6, 10);
 
-                Room newRoom = new Room(x, y, roomWidth, roomHeight);
-                if (TryAddRoom(newRoom))
+                Room newRoom = null;
+
+                for (int attempts = 0; attempts < 100; attempts++)
                 {
-                    rooms.Add(newRoom);
-                    DrawRoom(newRoom);
-                    if (rooms.Count > 1)
+                    //определяем случайные позиции для верхнего левого угла
+                    int x = rand.Next(1, levelWidth - roomWidth - 1);
+                    int y = rand.Next(1, levelHeight - roomHeight - 1);
+
+                    newRoom = new Room(x, y, roomWidth, roomHeight);
+
+                    //проверяем возможность добавление новой комнаты
+                    if (TryAddRoom(newRoom))
                     {
-                        ConnectRooms(rooms[rooms.Count - 2], newRoom);
+                        rooms.Add(newRoom);
+                        DrawRoom(newRoom);
+                        if (rooms.Count > 1)
+                        {
+                            ConnectRooms(rooms[rooms.Count - 2], newRoom);
+                        }
+                        break;
                     }
                 }
             }
@@ -62,7 +62,7 @@ namespace Roguelike.SceneGame.Location
             {
                 if (room.Intersects(r))
                 {
-                    return false; // Пересечение с другой комнатой
+                    return false;
                 }
             }
             return true;
@@ -70,81 +70,44 @@ namespace Roguelike.SceneGame.Location
 
         private void DrawRoom(Room room)
         {
-            for (int i = room.Y; i < room.Y + room.Height; i++)
+            for (int i = 0; i < room.height; i++)
             {
-                for (int j = room.X; j < room.X + room.Width; j++)
+                for (int j = 0; j < room.width; j++)
                 {
-                    map[i][j] = '.'; // Пол комнаты
+                    // Проверяем, что координаты не выходят за пределы массива map
+                    int mapX = room.x + j;
+                    int mapY = room.y + i;
+
+                    if (mapY >= 0 && mapY < map.Length && mapX >= 0 && mapX < map[0].Length)
+                    {
+                        // Заполняем массив map символами из рамки комнаты
+                        map[mapY][mapX] = room.frame[i][j];
+                    }
                 }
             }
         }
-
         private void ConnectRooms(Room roomA, Room roomB)
         {
-            Random rand = new Random();
-            int x1 = roomA.X + roomA.Width / 2;
-            int y1 = roomA.Y + roomA.Height / 2;
-            int x2 = roomB.X + roomB.Width / 2;
-            int y2 = roomB.Y + roomB.Height / 2;
-
-            if (rand.Next(0, 2) == 0) // Случайный выбор направления
-            {
-                // Горизонтальный проход
-                DrawHorizontalTunnel(x1, x2, y1);
-                // Вертикальный проход
-                DrawVerticalTunnel(y1, y2, x2);
-            }
-            else
-            {
-                // Вертикальный проход
-                DrawVerticalTunnel(y1, y2, x1);
-                // Горизонтальный проход
-                DrawHorizontalTunnel(x1, x2, y2);
-            }
-        }
-        private void DrawHorizontalTunnel(int x1, int x2, int y)
-        {
-            for (int x = Math.Min(x1, x2); x <= Math.Max(x1, x2); x++)
-            {
-                map[y][x] = '.'; // Проход
-            }
+            
         }
 
-        private void DrawVerticalTunnel(int y1, int y2, int x)
+        private void DrawHorizontalTunnel(int xStart, int xEnd, int y)
         {
-            for (int y = Math.Min(y1, y2); y <= Math.Max(y1, y2); y++)
-            {
-                map[y][x] = '.'; // Проход
-            }
+           
+        }
+
+        private void DrawVerticalTunnel(int yStart, int yEnd, int x)
+        {
+           
         }
 
         public void PrintLevel()
         {
+
             foreach (var row in map)
             {
                 Console.WriteLine(new string(row));
             }
         }
     }
-
-    internal class Room
-    {
-        public int X { get; }
-        public int Y { get; }
-        public int Width { get; }
-        public int Height { get; }
-        public Room(int x, int y, int width, int height)
-        {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
-        }
-
-        public bool Intersects(Room other)
-        {
-            return !(X + Width <= other.X || X >= other.X + other.Width || Y + Height <= other.Y || Y >= other.Y + other.Height);
-        }
-    }
-
 }
