@@ -8,35 +8,8 @@
 *.csproj.nuget.g.props
 *.csproj.nuget.g.targets
 
-# Build results
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-[Aa][Rr][Mm]/
-[Bb]in/
-[Oo]bj/
-
-# Rider
-.idea/
-
-# Visual Studio Code
-.vscode/
-
-# NuGet Packages
-*.nupkg
-*.snupkg
-*.nuspec
-packages/
-
-# Logs
-*.log
-
-# Temporary files
-*.tmp
-*.temp
-
-# Other files
-Thumbs.db
-ehthumbs.db
-Desktop.ini
+# Visual Studio
+.Roguelike/bin
+.Roguelike/obj
+.Roguelike/Roguelike/obj
+.Roguelike/Roguelike/bin
