@@ -9,8 +9,10 @@ namespace Roguelike
     {
         private string[] options = { "Продолжить игру", "Новая игра", "Выйти" };
         private int selectLine = 0;
-
+        int consoleWidth = Console.WindowWidth;
         bool endWhile = false;
+        Art img = new Art();
+
         public void Start()
         {
             while (true)
@@ -38,10 +40,7 @@ namespace Roguelike
 
         private void DisplayMenu()
         {
-            int consoleWidth = Console.WindowWidth;
-
-            Art img = new Art();
-            img.Rogalick(ArtPositions.Center);
+            img.Rogalick(Position.Center);
 
             Console.Write("\n\n\n");
 

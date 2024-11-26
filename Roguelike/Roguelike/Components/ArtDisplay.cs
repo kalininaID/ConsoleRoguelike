@@ -2,30 +2,25 @@
 
 namespace Roguelike.Components
 {
-    enum ArtPositions
-    {
-        Left,
-        Center,
-        Right
-    }
+
     class Art
     {
-        ArtPositions pos = ArtPositions.Left;
+        Position pos = Position.Left;
         ConsoleColor color = ConsoleColor.White;
 
-        public void Rogalick(ArtPositions pos = ArtPositions.Left)
+        public void Rogalick(Position pos = Position.Left)
         {
             this.pos = pos;
             int consoleWidth = Console.WindowWidth;
             int whight = 68;
             string buffer = "";
 
-            if (pos == ArtPositions.Center)
+            if (pos == Position.Center)
             {
                 buffer = new string(' ', (consoleWidth - whight) / 2);
             }
 
-            if (pos == ArtPositions.Right)
+            if (pos == Position.Right)
             {
                 buffer = new string(' ', consoleWidth - whight);
             }
@@ -65,23 +60,23 @@ namespace Roguelike.Components
             Console.ResetColor();
         }
 
-        public void NewGame(ArtPositions pos = ArtPositions.Left, ConsoleColor color = ConsoleColor.White)
+        public void NewGame(Position pos = Position.Left, ConsoleColor color = ConsoleColor.White)
         {
             this.pos = pos;
             this.color = color;
 
             int consoleWidth = Console.WindowWidth;
             int whight = 67;
-            string buffer = "";
+            string buffer = "    ";
 
-            if (pos == ArtPositions.Center)
+            if (pos == Position.Center)
             {
-                buffer = new string(' ', (consoleWidth - whight) / 2);
+                buffer = buffer + new string(' ', (consoleWidth - whight) / 2);
             }
 
-            if (pos == ArtPositions.Right)
+            if (pos == Position.Right)
             {
-                buffer = new string(' ', consoleWidth - whight);
+                buffer = buffer + new string(' ', consoleWidth - whight);
             }
 
             Console.ForegroundColor = color;
