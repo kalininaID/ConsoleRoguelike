@@ -9,8 +9,8 @@ namespace Roguelike
             // Кодировка на UTF-8
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            Menu menu = new Menu();
-            menu.Run();
+            SceneManager manager = new SceneManager();
+            manager.Start();
         }
     }
 }

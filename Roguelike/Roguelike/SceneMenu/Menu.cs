@@ -1,4 +1,6 @@
 ﻿using System;
+using Roguelike.Components;
+using Roguelike.SceneMenu;
 
 
 namespace Roguelike
@@ -6,10 +8,10 @@ namespace Roguelike
     class Menu
     {
         private string[] options = { "Продолжить игру", "Новая игра", "Выйти" };
-        private string login = string.Empty;
-        private string password = string.Empty;
         private int selectLine = 0;
-        public void Run()
+
+        bool endWhile = false;
+        public void Start()
         {
             while (true)
             {
@@ -20,62 +22,65 @@ namespace Roguelike
 
                 HandleInput(key);
 
-                if (key == ConsoleKey.Enter) // Принять
+                if (endWhile)
                 {
                     Console.Clear();
-                    Console.WriteLine($"Данные приняты.\nНажато:");
                     break;
                 }
             }
+
+            if (endWhile)
+            {
+                OnClickBtn();
+            }
+            
         }
 
         private void DisplayMenu()
         {
+            int consoleWidth = Console.WindowWidth;
 
-            ArtDisplay img = new ArtDisplay();
+            Art img = new Art();
+            img.Rogalick(ArtPositions.Center);
 
-            img.DrawRogalick();
+            Console.Write("\n\n\n");
 
-            Console.WriteLine("");
-            Console.WriteLine("");
-            if (selectLine == 0)
-            {
-                Console.WriteLine("                                     ⚔️  Продолжить  ⚔️");
-            }
-            else
-            {
-                Console.WriteLine("                                         Продолжить");
-            }
-            Console.WriteLine("");
-            if (selectLine == 1)
-            {
-                Console.WriteLine("                                     ⚔️  Новая игра  ⚔️");
-            }
-            else
-            {
-                Console.WriteLine("                                         Новая игра");
-            }
-            Console.WriteLine("");
-            if (selectLine == 2)
-            {
-                Console.WriteLine("                                       ⚔️  Выход  ⚔️");
-            }
-            else
-            {
-                Console.WriteLine("                                           Выход");
-            }
+            string chooseSymbol = "⚔️";
 
+            for (int i = 0; i < options.Length; i++) {
+                string line = $"{(i == selectLine ? chooseSymbol : " ")} {options[i]} {(i == selectLine ? chooseSymbol : " ")}";
+                int lineLength = line.Length;
+                int spacesToAdd = (consoleWidth - lineLength) / 2;
+
+                string centeredLine = new string(' ', spacesToAdd) + line;
+
+                Console.WriteLine(centeredLine);
+                Console.WriteLine("");
+            }
+        }
+
+        private void OnClickBtn()
+        {
+            if (options[selectLine + 1] == "Новая игра") {
+                NewGameMenu manager = new NewGameMenu();
+                manager.Start();
+            }
         }
 
         private void HandleInput(ConsoleKey key)
         {
-            if (key == ConsoleKey.UpArrow)
+            if (key == ConsoleKey.DownArrow)
             {
                 selectLine = (selectLine < 2) ? selectLine + 1 : 0;
             }
-            if (key == ConsoleKey.DownArrow)
+            if (key == ConsoleKey.UpArrow)
             {
                 selectLine = (selectLine > 0) ? selectLine - 1 : 2;
+            }
+            if (key == ConsoleKey.Enter)
+            {
+                selectLine = (selectLine > 0) ? selectLine - 1 : 2;
+                endWhile = true;
             }
         }
     }

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="SceneGame\Location\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 
 </Project>
