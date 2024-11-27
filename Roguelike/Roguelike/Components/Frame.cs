@@ -8,16 +8,16 @@ namespace Roguelike.Components
 {
     internal class Frame
     {
-        public static char[][] DrawFrame(int width, int height)
+        public static string[][] DrawFrame(int width, int height)
         {
-            char[][] frame = new char[height][];
+            string[][] frame = new string[height][];
 
             for (int i = 0; i < height; i++)
             {
-                frame[i] = new char[width];
+                frame[i] = new string[width];
 
                 for (int j = 0; j < width; j++)
-                    frame[i][j] = ' ';
+                    frame[i][j] = " ";
             }
 
 
@@ -29,18 +29,18 @@ namespace Roguelike.Components
                     {
                         if (x != 0 && x != height - 1)
                         {
-                            frame[x][y] = '|';
+                            frame[x][y] = "|";
                         }
                     }
                     else
                     {
                         if (x == 0)
                         {
-                            frame[x][y] = '_';
+                            frame[x][y] = "_";
                         }
                         if (x == height - 1)
                         {
-                            frame[x][y] = '‾';
+                            frame[x][y] = "‾";
                         }
                     }
                 }
@@ -48,11 +48,11 @@ namespace Roguelike.Components
             return frame;
         }
 
-        public static void PrintRoom(char[][] frame)
+        public static void PrintRoom(string[][] frame)
         {
             foreach (var row in frame)
             {
-                Console.WriteLine(new string(row));
+                Console.WriteLine(row);
             }
         }
     }

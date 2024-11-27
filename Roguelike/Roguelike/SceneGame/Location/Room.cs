@@ -13,7 +13,7 @@ namespace Roguelike
         public int y;
         public int width;
         public int height;
-        public char[][] frame;
+        public string[][] frame;
 
         public Room(int x, int y, int width, int height)
         {
