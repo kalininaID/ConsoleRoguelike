@@ -16,6 +16,10 @@ namespace Roguelike.SceneMenu
         private Dictionary<string, string> settingP1;
         private Dictionary<string, string> settingP2;
 
+        Dictionary<int, Dictionary<string, string>> characters;
+        int cursorP1 = 0;
+        int cursorP2 = 0;
+
         private string nameP1 = "Player 1";
         private string nameP2 = "Player 2";
 
@@ -27,13 +31,14 @@ namespace Roguelike.SceneMenu
         private Art img = new Art();
         private bool flagChangeControll = false;
 
-        private string keyFrom = "-";
-        private string keyTo = "-";
+        PopUpChangeControll popUp = new PopUpChangeControll();
 
         public void Start()
         {
             while (true)
             {
+                characters = Characters.Get();
+
                 settingP1 = Settings.Get(nameP1);
                 settingP2 = Settings.Get(nameP2);
 
@@ -65,32 +70,34 @@ namespace Roguelike.SceneMenu
         public char[][] CreatePlayer(char[][] window, string namePlayer = "Player 1", bool inGame = false, bool del = false)
         {
             if (inGame)
-            {
-                if (del) {
-                    window = ArrFunc.TextInArr(window, "Нажмите E, чтобы удалить игрока", (window.Length - 2));
-                }
-                
+            {                
                 window = ArrFunc.TextInArr(window, namePlayer, 2);
-                
-                string emoji = "👮";
-                window = ArrFunc.TextInArr(window, $"< {emoji} >", 4);
-
-                window = ArrFunc.TextInArr(window, "Имя: Александр   ", 6);
-                window = ArrFunc.TextInArr(window, "Сила: 8          ", 7);
-                window = ArrFunc.TextInArr(window, "Скорость: 2      ", 8);
-                window = ArrFunc.TextInArr(window, "Живучесть: 9     ", 9);
 
                 char[][] controlInfo;
+                int cursor;
                 if (nameP1 == namePlayer)
                 {
+                    cursor = cursorP1;
                     controlInfo = ControlInfo.Create(settingP1);
+
                 }else
                 {
+                    cursor = cursorP2;
                     controlInfo = ControlInfo.Create(settingP2);
                 }
 
-                window = ArrFunc.ArrInArr(window, controlInfo, line: window.Length - 7);
-            } 
+                string emoji = characters[cursor]["Иконка"];
+                window = ArrFunc.TextInArr(window, $"< {emoji} >", 4);
+
+                string[] data = ["Имя", "Сила", "Скорость", "Живучесть"];
+                for (int i = 0; i < data.Length; i++)
+                {
+                    window = ArrFunc.TextInArr(window, $"{data[i]}: {characters[cursor][data[i]]}", 6 + i);
+                }
+
+                window = ArrFunc.ArrInArr(window, controlInfo, line: window.Length - 8);
+                window = ArrFunc.TextInArr(window, "Нажмите Space, если готов!", (window.Length - 2));
+            }
             else
             {
                 window = ArrFunc.TextInArr(window, "Нажмите E, чтобы", (window.Length/2 - 1));
@@ -106,11 +113,10 @@ namespace Roguelike.SceneMenu
 
             if (flagChangeControll)
             {
-                char[][] popUp = PopUp.Create(60, 12, "Нажмите клавишу, которую хотите изменить...");
-                popUp = ArrFunc.TextInArr(popUp, "╔═══╗    ╔═══╗", 5);
-                popUp = ArrFunc.TextInArr(popUp, $"║ {keyFrom} ║ ➨  ║ {keyTo} ║", 6);
-                popUp = ArrFunc.TextInArr(popUp, "╚═══╝    ╚═══╝", 7);
-                window = ArrFunc.ArrInArr(window, popUp, line: window.Length/2 - 7);
+                popUp.Create();
+                char[][] popUpArr = popUp.popUp;
+
+                window = ArrFunc.ArrInArr(window, popUpArr, line: window.Length/2 - 7);
             }
 
             foreach (var row in window)
@@ -121,9 +127,9 @@ namespace Roguelike.SceneMenu
             string changeP2 = "";
             if (readyP2)
             {
-               changeP2 = "2 - изменить имя 2 игрока;";
+               changeP2 = "E - удалить 2 игрока;";
             }
-            Console.WriteLine($"0 - изменить управление; 1 - изменить имя 1 игрока; {changeP2} ");
+            Console.WriteLine($"0 - изменить управление; {changeP2} ");
         }
 
         private void HandleInput(ConsoleKey key)
@@ -131,43 +137,93 @@ namespace Roguelike.SceneMenu
             if (key == ConsoleKey.E)
             {
                 readyP2 = !readyP2;
+                if (readyP2)
+                    if (cursorP1 == cursorP2)
+                        MoveCursorCharacter(false, false);
             }
             if (key == ConsoleKey.D0)
             {
                 flagChangeControll = true;
             }
+
+            if (key == ConsoleKey.A)
+            {
+                MoveCursorCharacter(true, true);
+
+                if (cursorP1 == cursorP2)
+                    MoveCursorCharacter(true, true);
+            }
+            if (key == ConsoleKey.D)
+            {
+                MoveCursorCharacter(true, false);
+
+                if (cursorP1 == cursorP2)
+                    MoveCursorCharacter(true, false);
+            }
+
+            if (key == ConsoleKey.LeftArrow)
+            {
+                MoveCursorCharacter(false, true);
+
+                if (cursorP1 == cursorP2)
+                    MoveCursorCharacter(false, true);
+            }
+            if (key == ConsoleKey.RightArrow)
+            {
+                MoveCursorCharacter(false, false);
+
+                if (cursorP1 == cursorP2)
+                    MoveCursorCharacter(false, false);
+            }
+
+        }
+
+        private void MoveCursorCharacter(bool IsP1, bool IsLeft)
+        {
+            int cursor = 0;
+
+            if (IsP1)
+                cursor = cursorP1;
+            else
+                cursor = cursorP2;
+
+            if (IsLeft)
+                if (cursor > 0)
+                    cursor -= 1;
+                else
+                    cursor = characters.Count - 1;
+            else
+                if (cursor < characters.Count - 1)
+                    cursor += 1;
+                else
+                    cursor = 0;
+
+            if (IsP1)
+                cursorP1 = cursor;
+            else
+                cursorP2 = cursor;
         }
 
         private void ChangeControll(ConsoleKey key)
         {
+
             if (key == ConsoleKey.Escape)
             {
                 flagChangeControll = false;
-            } else
-            {
-                keyFrom = key.ToString();
-
-                switch (keyFrom)
-                {
-                    case "UpArrow":
-                        keyFrom = "⇧";
-                        break;
-                    case "LeftArrow":
-                        keyFrom = "⇦";
-                        break;
-                    case "DownArrow":
-                        keyFrom = "⇩";
-                        break;
-                    case "RightArrow":
-                        keyFrom = "⇨";
-                        break;
-                }
-
-                if (keyFrom.Length > 1)
-                {
-                    keyFrom = "!";
-                }
+                popUp.Clear();
+                return;
             }
+
+            if (key == ConsoleKey.Enter && popUp.keyFrom != "-" && popUp.keyTo != "-")
+            {
+                Settings.Set(popUp.keyFrom, popUp.keyTo);
+
+                flagChangeControll = false;
+                popUp.Clear();
+                return;
+            }
+
+            popUp.SetKey(key);
         }
     }
 }
