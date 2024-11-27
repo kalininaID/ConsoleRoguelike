@@ -11,19 +11,14 @@ namespace Roguelike
     {
         private int levelWidth;
         private int levelHeight;
-        private string[][] map;
+        private char[][] map;
 
         private List<Room> rooms;
-        public Player player1;
 
-        bool spawnPlayer1 = false;
-
-        public Level(int levelWidth, int levelHeight, Player player1)
+        public Level(int levelWidth, int levelHeight)
         {
             this.levelWidth = levelWidth;
             this.levelHeight = levelHeight;
-            this.player1 = player1;
-
             map = Frame.DrawFrame(levelWidth, levelHeight);
             rooms = new List<Room>();
         }
@@ -86,17 +81,8 @@ namespace Roguelike
 
                     if (mapY >= 0 && mapY < map.Length && mapX >= 0 && mapX < map[0].Length)
                     {
-                        if (map[mapY][mapX] != player1.DrawPlayer())
-                        {
-                            map[mapY][mapX] = room.frame[i][j];
-                        }
                         // Заполняем массив map символами из рамки комнаты
-
-                        if (!spawnPlayer1)
-                        {
-                            map[mapY + 2][mapX + 2] = player1.DrawPlayer();
-                            spawnPlayer1 = true;
-                        }
+                        map[mapY][mapX] = room.frame[i][j];
                     }
                 }
             }
@@ -121,7 +107,7 @@ namespace Roguelike
 
             foreach (var row in map)
             {
-                Console.WriteLine(row);
+                Console.WriteLine(new string(row));
             }
         }
     }

@@ -9,9 +9,9 @@ namespace Roguelike.SceneMenu
 {
     internal class NewGameMenu
     {
-        private string[][] window;
-        private string[][] fieldP1;
-        private string[][] fieldP2;
+        private char[][] window;
+        private char[][] fieldP1;
+        private char[][] fieldP2;
 
         bool readyP2 = false;
 
@@ -45,7 +45,7 @@ namespace Roguelike.SceneMenu
 
         }
 
-        public string[][] CreatePlayer(string[][] window, string namePlayer = "Player 1", bool inGame = false, bool del = false)
+        public char[][] CreatePlayer(char[][] window, string namePlayer = "Player 1", bool inGame = false, bool del = false)
         {
             if (inGame)
             {
@@ -75,7 +75,7 @@ namespace Roguelike.SceneMenu
 
             foreach (var row in window)
             {
-                Console.WriteLine(row);
+                Console.WriteLine(new string(row));
             }
         }
 

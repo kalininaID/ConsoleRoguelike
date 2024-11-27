@@ -19,7 +19,7 @@ namespace Roguelike
         public GameManager() {
             
             Player player1 = new Player(hpPlayer, damagePlayer);
-            Level level = new Level(widhtLevel, heightLevel, player1);
+            Level level = new Level(widhtLevel, heightLevel);
             level.GenerateLevel(roomCount);
             level.PrintLevel();
         }

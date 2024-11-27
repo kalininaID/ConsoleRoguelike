@@ -9,15 +9,15 @@ namespace Roguelike
 {
     internal class ArrFunc
     {
-        public static string[][] Join(string[][] arr1, string[][] arr2)
+        public static char[][] Join(char[][] arr1, char[][] arr2)
         {
             int rowCount = Math.Min(arr1.Length, arr2.Length);
 
-            string[][] join_arr = new string[rowCount][];
+            char[][] join_arr = new char[rowCount][];
 
             for (int i = 0; i < rowCount; i++)
             {
-                join_arr[i] = new string[arr1[i].Length + arr2[i].Length];
+                join_arr[i] = new char[arr1[i].Length + arr2[i].Length];
 
                 Array.Copy(arr1[i], 0, join_arr[i], 0, arr1[i].Length);
                 Array.Copy(arr2[i], 0, join_arr[i], arr1[i].Length, arr2[i].Length);
@@ -26,7 +26,7 @@ namespace Roguelike
             return join_arr;
         }
 
-        public static string[][] TextInArr(string[][] arr, string text, int line = 0, int marginLeft = 0, Position pos = Position.Center)
+        public static char[][] TextInArr(char[][] arr, string text, int line = 0, int marginLeft = 0, Position pos = Position.Center)
         {
             int buff = marginLeft;
 
@@ -41,7 +41,7 @@ namespace Roguelike
 
             for (int i = buff; i < buff + text.Length; i++)
             {
-               // arr[line][i] = text[i - buff];
+                arr[line][i] = text[i - buff];
             }
             return arr;
         }
