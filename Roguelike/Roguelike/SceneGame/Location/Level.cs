@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Roguelike
+namespace Roguelike.SceneGame.Location
 {
-    public class Level
+    internal class Level
     {
         private int levelWidth;
         private int levelHeight;
         private char[][] map;
-
         private List<Room> rooms;
 
         public Level(int levelWidth, int levelHeight)

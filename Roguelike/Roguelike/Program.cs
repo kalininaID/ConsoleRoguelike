@@ -1,4 +1,4 @@
-﻿using Roguelike;
+﻿using Roguelike.SceneGame.Location;
 using System;
 
 namespace Roguelike
@@ -10,8 +10,16 @@ namespace Roguelike
         {
             // Кодировка на UTF-8
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            
-            GameManager gameManager = new GameManager();
+
+            Menu menu = new Menu();
+            menu.Start();
+
+            /*char [][] room1 = Room.DrawFrame(20, 15);
+            Room.PrintRoom(room1);*/
+
+            //Level level = new Level(40, 20);
+            //level.GenerateLevel(3); // Генерируем 5 комнат
+            //level.PrintLevel();
         }
     }
 }
