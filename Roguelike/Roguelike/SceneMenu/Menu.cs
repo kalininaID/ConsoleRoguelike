@@ -60,10 +60,17 @@ namespace Roguelike
 
         private void OnClickBtn()
         {
-            if (options[selectLine + 1] == "Новая игра") {
+            if (selectLine == 0)
+            {
+                GameManager manager = new GameManager();
+                manager.Start();
+            }
+
+            if (selectLine == 1) {
                 NewGameMenu manager = new NewGameMenu();
                 manager.Start();
             }
+            
         }
 
         private void HandleInput(ConsoleKey key)
@@ -78,7 +85,6 @@ namespace Roguelike
             }
             if (key == ConsoleKey.Enter)
             {
-                selectLine = (selectLine > 0) ? selectLine - 1 : 2;
                 endWhile = true;
             }
         }

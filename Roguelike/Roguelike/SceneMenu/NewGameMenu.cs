@@ -55,12 +55,17 @@ namespace Roguelike.SceneMenu
                 
                 window = ArrFunc.TextInArr(window, namePlayer, 2);
 
-                window = ArrFunc.TextInArr(window, "< :) >", 4);
+                string emoji = "👮";
+                window = ArrFunc.TextInArr(window, $"< {emoji} >", 4);
 
                 window = ArrFunc.TextInArr(window, "Имя: Александр   ", 6);
                 window = ArrFunc.TextInArr(window, "Сила: 8          ", 7);
                 window = ArrFunc.TextInArr(window, "Скорость: 2      ", 8);
                 window = ArrFunc.TextInArr(window, "Живучесть: 9     ", 9);
+
+                char[][] controlInfo = ControlInfo.Create();
+
+                //window = ArrFunc.ArrInArr(window, controlInfo, line: 5);
             } 
             else
             {
