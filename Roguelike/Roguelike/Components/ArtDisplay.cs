@@ -80,7 +80,6 @@ namespace Roguelike.Components
             }
 
             Console.ForegroundColor = color;
-            Console.WriteLine("");
             Console.WriteLine(buffer + "███    ██ ███████ ██     ██      ██████   █████  ███    ███ ███████");
             Console.WriteLine(buffer + "████   ██ ██      ██     ██     ██       ██   ██ ████  ████ ██     ");
             Console.WriteLine(buffer + "██ ██  ██ █████   ██  █  ██     ██   ███ ███████ ██ ████ ██ █████  ");

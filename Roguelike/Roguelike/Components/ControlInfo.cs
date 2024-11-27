@@ -9,24 +9,25 @@ namespace Roguelike
 {
     internal class ControlInfo
     {
-        public static char[][] Create() {
-            char[][] window = new char[15][];
+        public static char[][] Create(Dictionary<string, string> setting) {
 
-            char[][] btnUp = Frame.DrawFrame(5, 3);
-            btnUp = ArrFunc.TextInArr(btnUp, "W ↑", 1);
+            string settingsPath = "settings.txt";
 
-            char[][] btnLeft = Frame.DrawFrame(5, 3);
-            btnLeft = ArrFunc.TextInArr(btnLeft, "← A", 1);
-            
-            char[][] btnDown = Frame.DrawFrame(5, 3);
-            btnDown = ArrFunc.TextInArr(btnDown, "S ↓", 1);
+            char[][] window = new char[5][];
 
-            char[][] btnRight = Frame.DrawFrame(5, 3);
-            btnRight = ArrFunc.TextInArr(btnRight, "D →", 1);
+            for (int i = 0; i < window.Length; i++)
+            {
+                window[i] = new char[13];
 
-            window = ArrFunc.Join(btnLeft, btnDown);
-            window = ArrFunc.Join(window, btnRight);
+                for (int j = 0; j < 13; j++)
+                    window[i][j] = ' ';
+            }
 
+            window = ArrFunc.TextInArr(window, "╔═══╗", 0);
+            window = ArrFunc.TextInArr(window, $"║{setting["up"]} ↑║", 1);
+            window = ArrFunc.TextInArr(window, "╔═══╬═══╬═══╗", 2);
+            window = ArrFunc.TextInArr(window, $"║{setting["left"]} ←║{setting["down"]} ↓║{setting["right"]} →║", 3);
+            window = ArrFunc.TextInArr(window, "╚═══╩═══╩═══╝", 4);
             return window;
         }
     }
