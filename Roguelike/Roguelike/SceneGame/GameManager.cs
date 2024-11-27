@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roguelike.SceneGame.Location;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,28 @@ namespace Roguelike
 {
     internal class GameManager
     {
+        private int widhtLevel = 40;
+        private int heightLevel = 20;
+        private int roomCount = 3;
+       
+        private int hpPlayer1 = 10;
+        private int DamagePlayer1 = 2;
+
         public void Start()
         {
-            /*char [][] room1 = Room.DrawFrame(20, 15);
-             Room.PrintRoom(room1);*/
+            Player player1 = new Player(hpPlayer1, DamagePlayer1);
+            Level level = new Level(widhtLevel, heightLevel, player1);
 
-            //Level level = new Level(40, 20);
-            //level.GenerateLevel(3); // Генерируем 5 комнат
-            //level.PrintLevel();
+            level.GenerateLevel(roomCount);
 
+            while (true)
+            {
+                Console.Clear();
+                level.PrintLevel();
+                
+                var key = Console.ReadKey(true).Key;
+                level.MovePlayer(key);
+            }
         }
     }
 }

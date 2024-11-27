@@ -12,13 +12,21 @@ namespace Roguelike
         public int experience;
         public List<string> Inventory;
 
+
+
         public Player(int hp, int damage)
         {
             this.hp = hp;
             this.damage = damage;
+            img = '*';
             level = 1;
             experience = 0;
             Inventory = [];
+        }
+
+        public char DrawPlayer()
+        {
+            return img;
         }
 
         public void UseItem(string item)
@@ -44,10 +52,6 @@ namespace Roguelike
         {
             level++;
             // Логика повышения уровня (например, увеличение hp или damage)
-        }
-
-        private void Move()
-        {
         }
     }
 }

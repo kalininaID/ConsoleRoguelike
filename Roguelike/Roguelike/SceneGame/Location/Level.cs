@@ -12,12 +12,21 @@ namespace Roguelike.SceneGame.Location
         private int levelWidth;
         private int levelHeight;
         private char[][] map;
-        private List<Room> rooms;
 
-        public Level(int levelWidth, int levelHeight)
+        private List<Room> rooms;
+        private Player player1;
+
+        public int playerStartX;
+        public int playerStartY;
+
+        bool playerSpawn = false;
+
+        public Level(int levelWidth, int levelHeight, Player player1)
         {
             this.levelWidth = levelWidth;
             this.levelHeight = levelHeight;
+            this.player1 = player1;
+
             map = Frame.DrawFrame(levelWidth, levelHeight);
             rooms = new List<Room>();
         }
@@ -28,7 +37,6 @@ namespace Roguelike.SceneGame.Location
 
             for (int i = 0; i < roomCount; i++)
             {
-                //генерация размера комнат
                 int roomWidth = rand.Next(6, 15);
                 int roomHeight = rand.Next(6, 10);
 
@@ -81,7 +89,20 @@ namespace Roguelike.SceneGame.Location
                     if (mapY >= 0 && mapY < map.Length && mapX >= 0 && mapX < map[0].Length)
                     {
                         // Заполняем массив map символами из рамки комнаты
-                        map[mapY][mapX] = room.frame[i][j];
+                        if (map[mapY][mapX] != player1.DrawPlayer())
+                        {
+                            map[mapY][mapX] = room.frame[i][j];
+                        }
+
+                        if (!playerSpawn)
+                        {
+                            playerStartX = mapX + 2;
+                            playerStartY = mapY + 2;
+
+                            map[playerStartY][playerStartX] = player1.DrawPlayer();
+                            playerSpawn = true;
+
+                        }
                     }
                 }
             }
@@ -99,6 +120,58 @@ namespace Roguelike.SceneGame.Location
         private void DrawVerticalTunnel(int yStart, int yEnd, int x)
         {
            
+        }
+
+        public void MovePlayer(ConsoleKey key)
+        {
+
+            if (key == ConsoleKey.DownArrow)
+            {
+                if (!isBoard(playerStartX, playerStartY + 1))
+                {
+                    playerStartY += 1;
+                    map[playerStartY - 1][playerStartX] = ' ';
+                    map[playerStartY][playerStartX] = player1.DrawPlayer();
+                }
+            }
+            if (key == ConsoleKey.UpArrow)
+            {
+                if (!isBoard(playerStartX, playerStartY - 1))
+                {
+                    playerStartY -= 1;
+                    map[playerStartY + 1][playerStartX] = ' ';
+                    map[playerStartY][playerStartX] = player1.DrawPlayer();
+                }
+            }
+            if (key == ConsoleKey.LeftArrow)
+            {
+                if (!isBoard(playerStartX - 1, playerStartY))
+                {
+                    playerStartX -= 1;
+                    map[playerStartY][playerStartX + 1] = ' ';
+                    map[playerStartY][playerStartX] = player1.DrawPlayer();
+                }
+            }
+            if (key == ConsoleKey.RightArrow)
+            {
+                if (!isBoard(playerStartX + 1, playerStartY))
+                {
+                    playerStartX += 1;
+                    map[playerStartY][playerStartX - 1] = ' ';
+                    map[playerStartY][playerStartX] = player1.DrawPlayer(); ;
+                }
+            }
+        }
+
+        public bool isBoard(int x, int y)
+        {
+            if (map[y][x] == '|' ||
+                map[y][x] == '_' ||
+                map[y][x] == '‾')
+            {
+                return true;
+            }
+            return false;
         }
 
         public void PrintLevel()
