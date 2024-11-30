@@ -13,7 +13,7 @@ namespace Roguelike
         public int y;
         public int width;
         public int height;
-        public char[][] frame;
+        public string[][] frame;
 
         public Room(int x, int y, int width, int height)
         {
@@ -21,7 +21,8 @@ namespace Roguelike
             this.y = y;
             this.width = width;
             this.height = height;
-            frame = Frame.DrawFrame(width, height);
+            frame = null;
+                //Frame.DrawFrame(width, height);
         }
 
         public bool Intersects(Room other)

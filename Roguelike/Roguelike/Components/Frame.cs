@@ -6,54 +6,101 @@ using System.Threading.Tasks;
 
 namespace Roguelike.Components
 {
-    internal class Frame
+
+    public class Frame
     {
-        public static char[][] DrawFrame(int width, int height)
+        public string[][] VisualArr { get; set; }
+        public int[][] ColorsArr { get; set; }
+
+        public enum TypeBorder
         {
-            char[][] frame = new char[height][];
+            STANDARD,
+            DOUBLE,
+            DOTTED,
+            ROUNDED,
+            EXRTABOLD
+        }
 
-            for (int i = 0; i < height; i++)
+        public Frame(int wight, int hieght)
+        {
+            VisualArr = ArrFunc.CreateEmptyArray(wight, hieght, " ");
+            ColorsArr = ArrFunc.CreateEmptyArray(wight, hieght, 0);
+        }
+
+        public void DrawBorders(Colors colorBorder = Colors.WHITE, TypeBorder typeBorder = TypeBorder.STANDARD)
+        {
+            string[] border;
+            switch (typeBorder)
             {
-                frame[i] = new char[width];
-
-                for (int j = 0; j < width; j++)
-                    frame[i][j] = ' ';
+                case TypeBorder.STANDARD:
+                    border = ["┌", "┐", "└", "┘", "─", "│"];
+                    break;
+                case TypeBorder.DOUBLE:
+                    border = ["╔", "╗", "╚", "╝", "═", "║"];
+                    break;
+                case TypeBorder.DOTTED:
+                    border = ["┌", "┐", "└", "┘", "╌", "┆"];
+                    break;
+                case TypeBorder.ROUNDED:
+                    border = ["╭", "╮", "╰", "╯", "─", "│"];
+                    break;
+                case TypeBorder.EXRTABOLD:
+                    border = ["▅", "▅", "█", "█", "▅", "█"];
+                    break;
+                default:
+                    border = ["┌", "┐", "└", "┘", "─", "│"];
+                    break;
             }
 
+            VisualArr[0][0] = border[0];
+            VisualArr[0][VisualArr[0].Length - 1] = border[1];
+            VisualArr[VisualArr.Length - 1][0] = border[2];
+            VisualArr[VisualArr.Length - 1][VisualArr[0].Length - 1] = border[3];
 
-            for (int x = 0; x < height; x++)
+            for (int i = 0; i < VisualArr.Length; i++)
             {
-                for (int y = 0; y < width; y++)
+                for (int j = 0; j < VisualArr[0].Length; j++)
                 {
-                    if (y == 0 || y == width - 1)
+                    ColorsArr[i][j] = (int)colorBorder;
+                    if ((i == 0 && j == 0) || (i == VisualArr.Length-1 && j == VisualArr[0].Length - 1) ||
+                        (i == VisualArr.Length - 1 && j == 0) || (i == 0 && j == VisualArr[0].Length - 1))
                     {
-                        if (x != 0 && x != height - 1)
-                        {
-                            frame[x][y] = '|';
-                        }
-                    }
-                    else
+                        continue;
+                    } else
                     {
-                        if (x == 0)
+                        if (i == 0 || i == VisualArr.Length - 1)
                         {
-                            frame[x][y] = '_';
+                            VisualArr[i][j] = border[4];
                         }
-                        if (x == height - 1)
+                        if (j==0 || j == VisualArr[0].Length - 1)
                         {
-                            frame[x][y] = '‾';
+                            VisualArr[i][j] = border[5];
                         }
                     }
                 }
             }
-            return frame;
         }
 
-        public static void PrintRoom(char[][] frame)
+        public void Draw()
         {
-            foreach (var row in frame)
+            for (int i = 0; i < VisualArr.Length; i++)
             {
-                Console.WriteLine(new string(row));
+                for (int j = 0; j < VisualArr[i].Length; j++)
+                {
+                    if (ColorsArr[i][j] == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else if (ColorsArr[i][j] == 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
+
+                    Console.Write(VisualArr[i][j]);
+                }
+                Console.WriteLine();
             }
+            Console.ResetColor();
         }
     }
 }

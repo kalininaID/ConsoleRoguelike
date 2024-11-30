@@ -9,18 +9,18 @@ namespace Roguelike
 {
     internal class ControlInfo
     {
-        public static char[][] Create(Dictionary<string, string> setting) {
+        public static string[][] Create(Dictionary<string, string> setting) {
 
             string settingsPath = "settings.txt";
 
-            char[][] window = new char[5][];
+            string[][] window = new string[5][];
 
             for (int i = 0; i < window.Length; i++)
             {
-                window[i] = new char[13];
+                window[i] = new string[13];
 
                 for (int j = 0; j < 13; j++)
-                    window[i][j] = ' ';
+                    window[i][j] = " ";
             }
 
             window = ArrFunc.TextInArr(window, "╔═══╗", 0);

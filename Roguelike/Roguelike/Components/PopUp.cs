@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace Roguelike.Components
 {
-    internal class PopUp
+    internal class PopUp : Frame
     {
-        public static char[][] Create(int wight = 18, int hieght = 10, string title = "")
+        public PopUp(string title, int wight, int hieght) : base(wight, hieght)
         {
-            char[][] popUp = Frame.DrawFrame(wight, hieght);
-            popUp = ArrFunc.TextInArr(popUp, "⌧", pos: Position.Right, line: 1, margin: 2);
-            popUp = ArrFunc.TextInArr(popUp, title, 3);
-            return popUp;
+            VisualArr = ArrFunc.TextInArr(VisualArr, "⌧", pos: Position.Right, line: 1, margin: 2);
+            VisualArr = ArrFunc.TextInArr(VisualArr, title, 3);
         }
-
     }
 }

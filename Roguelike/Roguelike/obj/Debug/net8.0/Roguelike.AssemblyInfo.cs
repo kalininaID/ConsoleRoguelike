@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Roguelike")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6b39a8ded543ccccb4bb1f328bb1d934d4a0071")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b81be1c0f6321e7d54cc660fd9cdf4da44775a55")]
 [assembly: System.Reflection.AssemblyProductAttribute("Roguelike")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Roguelike")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

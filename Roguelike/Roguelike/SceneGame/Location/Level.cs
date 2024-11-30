@@ -11,7 +11,7 @@ namespace Roguelike.SceneGame.Location
     {
         private int levelWidth;
         private int levelHeight;
-        private char[][] map;
+        private string[][] map;
 
         private List<Room> rooms;
         private Player player1;
@@ -27,7 +27,8 @@ namespace Roguelike.SceneGame.Location
             this.levelHeight = levelHeight;
             this.player1 = player1;
 
-            map = Frame.DrawFrame(levelWidth, levelHeight);
+            map = null;
+                //Frame.DrawFrame(levelWidth, levelHeight);
             rooms = new List<Room>();
         }
 
@@ -130,7 +131,7 @@ namespace Roguelike.SceneGame.Location
                 if (!isBoard(playerStartX, playerStartY + 1))
                 {
                     playerStartY += 1;
-                    map[playerStartY - 1][playerStartX] = ' ';
+                    map[playerStartY - 1][playerStartX] = " ";
                     map[playerStartY][playerStartX] = player1.DrawPlayer();
                 }
             }
@@ -139,7 +140,7 @@ namespace Roguelike.SceneGame.Location
                 if (!isBoard(playerStartX, playerStartY - 1))
                 {
                     playerStartY -= 1;
-                    map[playerStartY + 1][playerStartX] = ' ';
+                    map[playerStartY + 1][playerStartX] = " ";
                     map[playerStartY][playerStartX] = player1.DrawPlayer();
                 }
             }
@@ -148,7 +149,7 @@ namespace Roguelike.SceneGame.Location
                 if (!isBoard(playerStartX - 1, playerStartY))
                 {
                     playerStartX -= 1;
-                    map[playerStartY][playerStartX + 1] = ' ';
+                    map[playerStartY][playerStartX + 1] = " ";
                     map[playerStartY][playerStartX] = player1.DrawPlayer();
                 }
             }
@@ -157,7 +158,7 @@ namespace Roguelike.SceneGame.Location
                 if (!isBoard(playerStartX + 1, playerStartY))
                 {
                     playerStartX += 1;
-                    map[playerStartY][playerStartX - 1] = ' ';
+                    map[playerStartY][playerStartX - 1] = " ";
                     map[playerStartY][playerStartX] = player1.DrawPlayer(); ;
                 }
             }
@@ -165,9 +166,9 @@ namespace Roguelike.SceneGame.Location
 
         public bool isBoard(int x, int y)
         {
-            if (map[y][x] == '|' ||
-                map[y][x] == '_' ||
-                map[y][x] == '‾')
+            if (map[y][x] == "|" ||
+                map[y][x] == "_" ||
+                map[y][x] == "‾")
             {
                 return true;
             }
@@ -179,7 +180,7 @@ namespace Roguelike.SceneGame.Location
 
             foreach (var row in map)
             {
-                Console.WriteLine(new string(row));
+                Console.WriteLine(row);
             }
         }
     }

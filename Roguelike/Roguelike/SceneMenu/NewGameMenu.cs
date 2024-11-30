@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Roguelike.Components;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Roguelike.Components.Frame;
 
 namespace Roguelike.SceneMenu
 {
+
+
     internal class NewGameMenu
     {
-        private char[][] window;
-        private char[][] fieldP1;
-        private char[][] fieldP2;
+        private Frame window;
+
+        private Frame fieldP1;
+        private Frame fieldP2;
 
         private Dictionary<string, string> settingP1;
         private Dictionary<string, string> settingP2;
@@ -44,22 +49,34 @@ namespace Roguelike.SceneMenu
 
                 consoleWidth = Console.WindowWidth;
                 consoleHeight = Console.WindowHeight;
+
+                window = new Frame(consoleHeight - 7, consoleWidth);
+
                 int h = consoleHeight - 7;
                 int w = consoleWidth / 2;
-                fieldP1 = Frame.DrawFrame(w, h);
-                fieldP2 = Frame.DrawFrame(w, h);
+
+                fieldP1 = new Frame(w, h);
+                fieldP2 = new Frame(w, h);
+
+                fieldP1.DrawBorders(colorBorder: Colors.RED, typeBorder: TypeBorder.EXRTABOLD);
+                fieldP2.DrawBorders();
 
                 fieldP1 = CreatePlayer(fieldP1, "Player 1", true);
                 fieldP2 = CreatePlayer(fieldP2, "Player 2", readyP2, del: true);
 
-                window = ArrFunc.Join(fieldP1, fieldP2);
                 DisplayMenu();
 
                 var key = Console.ReadKey(true).Key;
 
                 if (flagChangeControll)
                 {
-                    ChangeControll(key);
+                    popUp.ChangeControll(key);
+
+                    if (popUp.isClose)
+                    {
+                        flagChangeControll = false;
+                        popUp.Clear();
+                    }
                 } else
                 {
                     HandleInput(key);
@@ -67,13 +84,16 @@ namespace Roguelike.SceneMenu
             }
         }
 
-        public char[][] CreatePlayer(char[][] window, string namePlayer = "Player 1", bool inGame = false, bool del = false)
+        public Frame CreatePlayer(Frame playerWindow, string namePlayer = "Player 1", bool inGame = false, bool del = false)
         {
-            if (inGame)
-            {                
-                window = ArrFunc.TextInArr(window, namePlayer, 2);
+            string[][] visualPW = playerWindow.VisualArr;
+            int[][] colorsPW = playerWindow.ColorsArr;
 
-                char[][] controlInfo;
+            if (inGame)
+            {
+                visualPW = ArrFunc.TextInArr(visualPW, namePlayer, 2);
+
+                string[][] controlInfo;
                 int cursor;
                 if (nameP1 == namePlayer)
                 {
@@ -87,23 +107,31 @@ namespace Roguelike.SceneMenu
                 }
 
                 string emoji = characters[cursor]["Иконка"];
-                window = ArrFunc.TextInArr(window, $"< {emoji} >", 4);
+                visualPW = ArrFunc.TextInArr(visualPW, $"< {emoji} >", 4);
 
                 string[] data = ["Имя", "Сила", "Скорость", "Живучесть"];
                 for (int i = 0; i < data.Length; i++)
                 {
-                    window = ArrFunc.TextInArr(window, $"{data[i]}: {characters[cursor][data[i]]}", 6 + i);
+                    visualPW = ArrFunc.TextInArr(visualPW, $"{data[i]}: {characters[cursor][data[i]]}", 6 + i);
                 }
 
-                window = ArrFunc.ArrInArr(window, controlInfo, line: window.Length - 8);
-                window = ArrFunc.TextInArr(window, "Нажмите Space, если готов!", (window.Length - 2));
+                visualPW = ArrFunc.ArrInArr(visualPW, controlInfo, line: visualPW.Length - 8);
+
+                if (nameP1 == namePlayer)
+                    visualPW = ArrFunc.TextInArr(visualPW, "Нажми Space, если готов!", (visualPW.Length - 2));
+                else
+                    visualPW = ArrFunc.TextInArr(visualPW, "Нажми Enter, если готов!", (visualPW.Length - 2));
             }
             else
             {
-                window = ArrFunc.TextInArr(window, "Нажмите E, чтобы", (window.Length/2 - 1));
-                window = ArrFunc.TextInArr(window, "добавить игрока", (window.Length / 2));
+                visualPW = ArrFunc.TextInArr(visualPW, "Нажмите E, чтобы", (visualPW.Length/2 - 1));
+                visualPW = ArrFunc.TextInArr(visualPW, "добавить игрока", (visualPW.Length / 2));
             }
-            return window;
+
+            playerWindow.VisualArr = visualPW;
+            playerWindow.ColorsArr = colorsPW;
+
+            return playerWindow;
         }
 
         public void DisplayMenu()
@@ -111,29 +139,51 @@ namespace Roguelike.SceneMenu
             Console.Clear();
             img.NewGame(Position.Center, ConsoleColor.Gray);
 
-            if (flagChangeControll)
-            {
-                popUp.Create();
-                char[][] popUpArr = popUp.popUp;
+            window.VisualArr = ArrFunc.Join(fieldP1.VisualArr, fieldP2.VisualArr);
+            window.ColorsArr = ArrFunc.Join(fieldP1.ColorsArr, fieldP2.ColorsArr);
 
-                window = ArrFunc.ArrInArr(window, popUpArr, line: window.Length/2 - 7);
-            }
+            //if (flagChangeControll)
+            //{
+            //    popUp.Create();
+            //    int[][] colorsPopUp = popUp.GetColors();
 
-            foreach (var row in window)
-            {
-                Console.WriteLine(new string(row));
-            }
-            
+            //    string[][] popUpArr = popUp.popUp;
+
+            //    window = ArrFunc.ArrInArr(window, popUpArr, line: window.Length/2 - 7);
+            //    colorsWindow = ArrFunc.ArrInArr(colorsWindow, colorsPopUp, line: window.Length / 2 - 7);
+            //}
+
+            window.Draw();
+
             string changeP2 = "";
             if (readyP2)
             {
-               changeP2 = "E - удалить 2 игрока;";
+               changeP2 = "E - удалить 2 игрока; ";
             }
-            Console.WriteLine($"0 - изменить управление; {changeP2} ");
+            Console.WriteLine($"0 - изменить управление; {changeP2}");
+        }
+
+        private string[][] PlayerReady(string[][] playerWindow)
+        {
+
+            return playerWindow;
         }
 
         private void HandleInput(ConsoleKey key)
         {
+            if (key == ConsoleKey.Spacebar)
+            {
+                int a = 2;
+                //fieldP1.Array = PlayerReady(fieldP1.Array);
+                //закрыть возможности для 1 перснажа пометить что он готов
+            }
+            if (key == ConsoleKey.Enter)
+            {
+                int a = 2;
+                //fieldP1.Array = PlayerReady(fieldP2.Array);
+                //закрыть возможности для 1 перснажа пометить что он готов
+            }
+
             if (key == ConsoleKey.E)
             {
                 readyP2 = !readyP2;
@@ -150,25 +200,25 @@ namespace Roguelike.SceneMenu
             {
                 MoveCursorCharacter(true, true);
 
-                if (cursorP1 == cursorP2)
+                if (cursorP1 == cursorP2 && readyP2)
                     MoveCursorCharacter(true, true);
             }
             if (key == ConsoleKey.D)
             {
                 MoveCursorCharacter(true, false);
 
-                if (cursorP1 == cursorP2)
+                if (cursorP1 == cursorP2 && readyP2)
                     MoveCursorCharacter(true, false);
             }
 
-            if (key == ConsoleKey.LeftArrow)
+            if (key == ConsoleKey.LeftArrow && readyP2)
             {
                 MoveCursorCharacter(false, true);
 
                 if (cursorP1 == cursorP2)
                     MoveCursorCharacter(false, true);
             }
-            if (key == ConsoleKey.RightArrow)
+            if (key == ConsoleKey.RightArrow && readyP2)
             {
                 MoveCursorCharacter(false, false);
 
@@ -204,26 +254,6 @@ namespace Roguelike.SceneMenu
                 cursorP2 = cursor;
         }
 
-        private void ChangeControll(ConsoleKey key)
-        {
-
-            if (key == ConsoleKey.Escape)
-            {
-                flagChangeControll = false;
-                popUp.Clear();
-                return;
-            }
-
-            if (key == ConsoleKey.Enter && popUp.keyFrom != "-" && popUp.keyTo != "-")
-            {
-                Settings.Set(popUp.keyFrom, popUp.keyTo);
-
-                flagChangeControll = false;
-                popUp.Clear();
-                return;
-            }
-
-            popUp.SetKey(key);
-        }
+        
     }
 }
