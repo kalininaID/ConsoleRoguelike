@@ -1,0 +1,12 @@
+Player 1
+up: W
+left: A
+down: S
+right: D
+
+Player 2
+up: ⇧
+left: ⇦
+down: ⇩
+right: ⇨
+

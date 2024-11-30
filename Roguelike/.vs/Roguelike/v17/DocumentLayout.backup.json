@@ -38,8 +38,7 @@
               "RelativeToolTip": "Roguelike\\Data\\Characters.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAADgvxMAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T09:14:05.275Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T09:14:05.275Z"
             },
             {
               "$type": "Document",
@@ -51,8 +50,7 @@
               "RelativeToolTip": "Roguelike\\Data\\Settings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T06:02:23.45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T06:02:23.45Z"
             },
             {
               "$type": "Document",
@@ -64,8 +62,7 @@
               "RelativeToolTip": "Roguelike\\SceneMenu\\PopUpChangeControll.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAiwA4AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T08:36:22.304Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T08:36:22.304Z"
             },
             {
               "$type": "Document",
@@ -75,7 +72,7 @@
               "RelativeDocumentMoniker": "Roguelike\\SceneMenu\\NewGameMenu.cs",
               "ToolTip": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\SceneMenu\\NewGameMenu.cs",
               "RelativeToolTip": "Roguelike\\SceneMenu\\NewGameMenu.cs",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAowIwAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T03:44:06.504Z",
               "EditorCaption": ""
