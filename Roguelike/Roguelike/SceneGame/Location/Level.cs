@@ -9,178 +9,121 @@ namespace Roguelike.SceneGame.Location
 {
     internal class Level
     {
+        private const int MAX_LEAF_SIZE = 20;
+
         private int levelWidth;
         private int levelHeight;
-        private string[][] map;
 
-        private List<Room> rooms;
-        private Player player1;
+        public Frame map;
+        public List<Room> rooms;
+        public List<Room> halls;
 
-        public int playerStartX;
-        public int playerStartY;
-
-        bool playerSpawn = false;
-
-        public Level(int levelWidth, int levelHeight, Player player1)
+        public Level(int levelWidth, int levelHeight)
         {
             this.levelWidth = levelWidth;
             this.levelHeight = levelHeight;
-            this.player1 = player1;
 
-            map = null;
-                //Frame.DrawFrame(levelWidth, levelHeight);
-            rooms = new List<Room>();
+            map = new Frame(levelWidth, levelHeight);
+            Generate();
         }
 
-        public void GenerateLevel(int roomCount)
+
+        public void Generate()
         {
-            Random rand = new Random();
+            List<Leaf> leafs = new List<Leaf>();
+            Leaf root = new Leaf(0, 0, levelWidth, levelHeight);
+            leafs.Add(root);
 
-            for (int i = 0; i < roomCount; i++)
+            bool didSplit = true;
+
+            while (didSplit)
             {
-                int roomWidth = rand.Next(6, 15);
-                int roomHeight = rand.Next(6, 10);
+                didSplit = false;
+                // Сохраняем текущее количество листьев
+                int currentCount = leafs.Count;
 
-                Room newRoom = null;
-
-                for (int attempts = 0; attempts < 100; attempts++)
+                for (int i = 0; i < currentCount; i++)
                 {
-                    //определяем случайные позиции для верхнего левого угла
-                    int x = rand.Next(1, levelWidth - roomWidth - 1);
-                    int y = rand.Next(1, levelHeight - roomHeight - 1);
-
-                    newRoom = new Room(x, y, roomWidth, roomHeight);
-
-                    //проверяем возможность добавление новой комнаты
-                    if (TryAddRoom(newRoom))
+                    Leaf l = leafs[i];
+                    if (l.leftChild == null && l.rightChild == null)
                     {
-                        rooms.Add(newRoom);
-                        DrawRoom(newRoom);
-                        if (rooms.Count > 1)
+                        if (l.width > MAX_LEAF_SIZE || l.height > MAX_LEAF_SIZE)
                         {
-                            ConnectRooms(rooms[rooms.Count - 2], newRoom);
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-        private bool TryAddRoom(Room room)
-        {
-            foreach (var r in rooms)
-            {
-                if (room.Intersects(r))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private void DrawRoom(Room room)
-        {
-            for (int i = 0; i < room.height; i++)
-            {
-                for (int j = 0; j < room.width; j++)
-                {
-                    // Проверяем, что координаты не выходят за пределы массива map
-                    int mapX = room.x + j;
-                    int mapY = room.y + i;
-
-                    if (mapY >= 0 && mapY < map.Length && mapX >= 0 && mapX < map[0].Length)
-                    {
-                        // Заполняем массив map символами из рамки комнаты
-                        if (map[mapY][mapX] != player1.DrawPlayer())
-                        {
-                            map[mapY][mapX] = room.frame[i][j];
-                        }
-
-                        if (!playerSpawn)
-                        {
-                            playerStartX = mapX + 2;
-                            playerStartY = mapY + 2;
-
-                            map[playerStartY][playerStartX] = player1.DrawPlayer();
-                            playerSpawn = true;
-
+                            if (l.Split())
+                            {
+                                leafs.Add(l.leftChild);
+                                leafs.Add(l.rightChild);
+                                didSplit = true;
+                            }
                         }
                     }
                 }
             }
-        }
-        private void ConnectRooms(Room roomA, Room roomB)
-        {
-            
+            rooms = root.CreateRooms();
         }
 
-        private void DrawHorizontalTunnel(int xStart, int xEnd, int y)
-        {
-           
-        }
-
-        private void DrawVerticalTunnel(int yStart, int yEnd, int x)
-        {
-           
-        }
-
-        public void MovePlayer(ConsoleKey key)
-        {
-
-            if (key == ConsoleKey.DownArrow)
-            {
-                if (!isBoard(playerStartX, playerStartY + 1))
-                {
-                    playerStartY += 1;
-                    map[playerStartY - 1][playerStartX] = " ";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer();
-                }
-            }
-            if (key == ConsoleKey.UpArrow)
-            {
-                if (!isBoard(playerStartX, playerStartY - 1))
-                {
-                    playerStartY -= 1;
-                    map[playerStartY + 1][playerStartX] = " ";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer();
-                }
-            }
-            if (key == ConsoleKey.LeftArrow)
-            {
-                if (!isBoard(playerStartX - 1, playerStartY))
-                {
-                    playerStartX -= 1;
-                    map[playerStartY][playerStartX + 1] = " ";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer();
-                }
-            }
-            if (key == ConsoleKey.RightArrow)
-            {
-                if (!isBoard(playerStartX + 1, playerStartY))
-                {
-                    playerStartX += 1;
-                    map[playerStartY][playerStartX - 1] = " ";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer(); ;
-                }
-            }
-        }
-
-        public bool isBoard(int x, int y)
-        {
-            if (map[y][x] == "|" ||
-                map[y][x] == "_" ||
-                map[y][x] == "‾")
-            {
-                return true;
-            }
-            return false;
-        }
 
         public void PrintLevel()
         {
+            // Создаем рамку уровня
+            //Frame frame = new Frame(levelWidth, levelHeight);
 
-            foreach (var row in map)
+            string[][] frame = new string[levelHeight][];
+
+            for (int i = 0; i < levelHeight; i++)
             {
-                Console.WriteLine(row);
+                frame[i] = new string[levelWidth];
+
+                for (int j = 0; j < levelWidth; j++)
+                    frame[i][j] = " ";
+            }
+
+
+            for (int x = 0; x < levelHeight; x++)
+            {
+                for (int y = 0; y < levelWidth; y++)
+                {
+                    if (y == 0 || y == levelWidth - 1)
+                    {
+                        if (x != 0 && x != levelHeight - 1)
+                        {
+                            frame[x][y] = "|";
+                        }
+                    }
+                    else
+                    {
+                        if (x == 0)
+                        {
+                            frame[x][y] = "─";
+                        }
+                        if (x == levelHeight - 1)
+                        {
+                            frame[x][y] = "─";
+                        }
+                    }
+                }
+            }
+
+
+            // Заполняем комнаты на уровне только точками
+            foreach (var room in rooms)
+            {
+                for (int i = room.y; i < room.y + room.height; i++)
+                {
+                    for (int j = room.x; j < room.x + room.width; j++)
+                    {
+                        frame[i][j] = "█"; // Заполняем всю область комнаты точками
+                    }
+                }
+            }
+            // Печатаем уровень с комнатами
+            foreach (var row in frame)
+            {
+                foreach (var cell in row)
+                {
+                    Console.Write(cell); // Выводим каждый элемент без переноса строки
+                }
+                Console.WriteLine(); // Переход на новую строку после вывода всей строки
             }
         }
     }
