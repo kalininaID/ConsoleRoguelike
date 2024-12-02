@@ -7,28 +7,25 @@ using Roguelike.Components;
 
 namespace Roguelike.SceneMenu
 {
-    internal class PopUpChangeControll
+    internal class PopUpChangeControll : PopUp
     {
-        public string titlePopUp = "Нажмите клавишу, которую хотите изменить...";
         public string keyFrom { get; set; } = "-";
         public string keyTo { get; set; } = "-";
-        public PopUp popUp { get; set; }
-
-        int w = 60;
-        int h = 12;
 
         public bool isClose = false;
-        public void Create()
+
+        public PopUpChangeControll() : base("Нажмите клавишу, которую хотите изменить...", 60, 12) {
+        }
+
+        public void Update()
         {
             isClose = false;
-            popUp = new PopUp(titlePopUp, w, h);
-            popUp.VisualArr = ArrFunc.TextInArr(popUp.VisualArr, "╔═══╗    ╔═══╗", 5);
-            popUp.VisualArr = ArrFunc.TextInArr(popUp.VisualArr, $"║ {keyFrom} ║ ➨  ║ {keyTo} ║", 6);
-            popUp.VisualArr = ArrFunc.TextInArr(popUp.VisualArr, "╚═══╝    ╚═══╝", 7);
-
+            VisualArr = ArrFunc.TextInArr(VisualArr, "╔═══╗    ╔═══╗", 5);
+            VisualArr = ArrFunc.TextInArr(VisualArr, $"║ {keyFrom} ║ ➨  ║ {keyTo} ║", 6);
+            VisualArr = ArrFunc.TextInArr(VisualArr, "╚═══╝    ╚═══╝", 7);
             if (keyFrom != "-" && keyTo != "-")
             {
-                popUp.VisualArr = ArrFunc.TextInArr(popUp.VisualArr, "Нажмите Enter, чтобы применить изменения", 9);
+                VisualArr = ArrFunc.TextInArr(VisualArr, "Нажмите Enter, чтобы применить изменения", 9);
             }
         }
 
@@ -84,13 +81,13 @@ namespace Roguelike.SceneMenu
                     keyFrom = "-";
                 }
 
-                titlePopUp = $"Нажмите клавишу, на которую хотите изменить {keyFrom}";
+                title = $"Нажмите клавишу, на которую хотите изменить {keyFrom}";
             }
         }
 
         public void Clear()
         {
-            titlePopUp = "Нажмите клавишу, которую хотите изменить...";
+            title = "Нажмите клавишу, которую хотите изменить...";
             keyFrom = "-";
             keyTo = "-";
         }
@@ -112,10 +109,6 @@ namespace Roguelike.SceneMenu
             }
 
             SetKey(key);
-        }
-        public int[][] GetColors()
-        {
-            return ArrFunc.CreateEmptyArray(w, h, 0);
         }
     }
 }

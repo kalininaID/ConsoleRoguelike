@@ -58,8 +58,8 @@ namespace Roguelike.SceneMenu
                 fieldP1 = new Frame(w, h);
                 fieldP2 = new Frame(w, h);
 
-                fieldP1.DrawBorders(colorBorder: Colors.RED, typeBorder: TypeBorder.EXRTABOLD);
-                fieldP2.DrawBorders();
+                fieldP1.DrawBorders(colorBorder: Colors.GRAY);
+                fieldP2.DrawBorders(colorBorder: Colors.GRAY);
 
                 fieldP1 = CreatePlayer(fieldP1, "Player 1", true);
                 fieldP2 = CreatePlayer(fieldP2, "Player 2", readyP2, del: true);
@@ -142,16 +142,13 @@ namespace Roguelike.SceneMenu
             window.VisualArr = ArrFunc.Join(fieldP1.VisualArr, fieldP2.VisualArr);
             window.ColorsArr = ArrFunc.Join(fieldP1.ColorsArr, fieldP2.ColorsArr);
 
-            //if (flagChangeControll)
-            //{
-            //    popUp.Create();
-            //    int[][] colorsPopUp = popUp.GetColors();
+            if (flagChangeControll)
+            {
+                popUp.Update();
 
-            //    string[][] popUpArr = popUp.popUp;
-
-            //    window = ArrFunc.ArrInArr(window, popUpArr, line: window.Length/2 - 7);
-            //    colorsWindow = ArrFunc.ArrInArr(colorsWindow, colorsPopUp, line: window.Length / 2 - 7);
-            //}
+                window.VisualArr = ArrFunc.ArrInArr(window.VisualArr, popUp.VisualArr, line: window.VisualArr.Length / 2 - 7);
+                window.ColorsArr = ArrFunc.ArrInArr(window.ColorsArr, popUp.ColorsArr, line: window.ColorsArr.Length / 2 - 7);
+            }
 
             window.Draw();
 

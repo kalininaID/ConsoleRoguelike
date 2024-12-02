@@ -61,19 +61,21 @@ namespace Roguelike.Components
             {
                 for (int j = 0; j < VisualArr[0].Length; j++)
                 {
-                    ColorsArr[i][j] = (int)colorBorder;
                     if ((i == 0 && j == 0) || (i == VisualArr.Length-1 && j == VisualArr[0].Length - 1) ||
                         (i == VisualArr.Length - 1 && j == 0) || (i == 0 && j == VisualArr[0].Length - 1))
                     {
+                        ColorsArr[i][j] = (int)colorBorder;
                         continue;
                     } else
                     {
                         if (i == 0 || i == VisualArr.Length - 1)
                         {
+                            ColorsArr[i][j] = (int)colorBorder;
                             VisualArr[i][j] = border[4];
                         }
                         if (j==0 || j == VisualArr[0].Length - 1)
                         {
+                            ColorsArr[i][j] = (int)colorBorder;
                             VisualArr[i][j] = border[5];
                         }
                     }
@@ -94,6 +96,10 @@ namespace Roguelike.Components
                     else if (ColorsArr[i][j] == 1)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
+                    }
+                    else if (ColorsArr[i][j] == 2)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
                     }
 
                     Console.Write(VisualArr[i][j]);
