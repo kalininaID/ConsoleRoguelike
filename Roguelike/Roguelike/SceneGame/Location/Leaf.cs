@@ -185,12 +185,12 @@ namespace Roguelike.SceneGame.Location
                 {
                     if (random.NextDouble() < 0.5)
                     {
-                        halls.Add(new Room(point2.X, point1.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point2.X, point1.Y, Math.Abs(w - 1), 1));
                         halls.Add(new Room(point2.X, point2.Y, 1, Math.Abs(h)));
                     }
                     else
                     {
-                        halls.Add(new Room(point2.X, point2.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point2.X, point2.Y, Math.Abs(w - 1), 1));
                         halls.Add(new Room(point1.X, point2.Y, 1, Math.Abs(h)));
                     }
                 }
@@ -198,12 +198,12 @@ namespace Roguelike.SceneGame.Location
                 {
                     if (random.NextDouble() < 0.5)
                     {
-                        halls.Add(new Room(point2.X, point1.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point2.X, point1.Y, Math.Abs(w - 1), 1));
                         halls.Add(new Room(point2.X, point1.Y, 1, Math.Abs(h)));
                     }
                     else
                     {
-                        halls.Add(new Room(point2.X, point2.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point2.X, point2.Y, Math.Abs(w - 1), 1));
                         halls.Add(new Room(point1.X, point1.Y, 1, Math.Abs(h)));
                     }
                 }
@@ -218,12 +218,12 @@ namespace Roguelike.SceneGame.Location
                 {
                     if (random.NextDouble() < 0.5)
                     {
-                        halls.Add(new Room(point1.X, point2.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point1.X, point2.Y, Math.Abs(w + 1), 1));
                         halls.Add(new Room(point1.X, point2.Y, 1, Math.Abs(h)));
                     }
                     else
                     {
-                        halls.Add(new Room(point1.X, point1.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point1.X, point1.Y, Math.Abs(w + 1), 1));
                         halls.Add(new Room(point2.X, point2.Y, 1, Math.Abs(h)));
                     }
                 }
@@ -231,12 +231,12 @@ namespace Roguelike.SceneGame.Location
                 {
                     if (random.NextDouble() < 0.5)
                     {
-                        halls.Add(new Room(point1.X, point1.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point1.X, point1.Y, Math.Abs(w + 1), 1));
                         halls.Add(new Room(point2.X, point1.Y, 1, Math.Abs(h)));
                     }
                     else
                     {
-                        halls.Add(new Room(point1.X, point2.Y, Math.Abs(w), 1));
+                        halls.Add(new Room(point1.X, point2.Y, Math.Abs(w + 1), 1));
                         halls.Add(new Room(point1.X, point1.Y, 1, Math.Abs(h)));
                     }
                 }
