@@ -25,26 +25,10 @@ namespace Roguelike
             {
                 Console.Clear();
                 level.PrintLevel();
-                //level.PrintPlayer();
 
                 var key = Console.ReadKey(true).Key;
                 level.MovePlayer(key);
             }
-            
-
-            /* 
-             Level level = new Level(widhtLevel, heightLevel, player1);
-
-             level.GenerateLevel(roomCount);
-
-             while (true)
-             {
-                 Console.Clear();
-                 level.PrintLevel();
-
-                 var key = Console.ReadKey(true).Key;
-                 level.MovePlayer(key);
-             }*/
         }
         private void HandleInput(ConsoleKey key)
         {
