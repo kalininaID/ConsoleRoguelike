@@ -10,6 +10,7 @@ namespace Roguelike.SceneGame.Location
     internal class Level
     {
         private const int MAX_LEAF_SIZE = 20;
+        private const int MIN_LEAF_SIZE = 10;
 
         private int levelWidth;
         private int levelHeight;
@@ -19,18 +20,29 @@ namespace Roguelike.SceneGame.Location
         private List<Room> halls;
 
         private Player player1;
-        private int playerStartX;
-        private int playerStartY;
+        private Player player2;
+
+        private int player1_X;
+        private int player1_Y;
+
+        private int player2_X;
+        private int player2_Y;
+
         private bool playerSpawn = false;
 
-        public Level(int levelWidth, int levelHeight, Player player1)
+        public Level(int levelWidth, int levelHeight, Player player1, Player? player2 = null)
         {
             this.levelWidth = levelWidth;
             this.levelHeight = levelHeight;
             this.player1 = player1;
+            if (player2 != null) 
+            { 
+                this.player2 = player2;
+            }
 
-            map = new Frame(levelWidth, levelHeight);
-            map.DrawBorders();
+            map = new Frame(levelWidth, levelHeight, "█", 2);
+            map.DrawBorders(typeBorder: Frame.TypeBorder.EXRTABOLD);
+
             Generate();
         }
 
@@ -55,7 +67,7 @@ namespace Roguelike.SceneGame.Location
                     {
                         if (l.width > MAX_LEAF_SIZE || l.height > MAX_LEAF_SIZE)
                         {
-                            if (l.Split())
+                            if (l.Split(MIN_LEAF_SIZE))
                             {
                                 leafs.Add(l.leftChild);
                                 leafs.Add(l.rightChild);
@@ -78,7 +90,7 @@ namespace Roguelike.SceneGame.Location
                 {
                     for (int j = room.x; j < room.x + room.width; j++)
                     {
-                        map.VisualArr[i][j] = "█";
+                        map.VisualArr[i][j] = " ";
                     }
                 }
             }
@@ -88,73 +100,102 @@ namespace Roguelike.SceneGame.Location
         public void PrintLevel()
         {
             PrintPlayer();
-            // Печатаем уровень с комнатами
-            foreach (var row in map.VisualArr)
-            {
-                foreach (var cell in row)
-                {
-                    Console.Write(cell); // Выводим каждый элемент без переноса строки
-                }
-                Console.WriteLine(); // Переход на новую строку после вывода всей строки
-            }
+            map.Draw();
         }
 
         public void PrintPlayer()
         {
-            if (map.VisualArr[rooms[0].y][rooms[0].x] == "█" && !playerSpawn)
+            if (map.VisualArr[rooms[0].y][rooms[0].x] == " " && !playerSpawn)
             {
-                playerStartX = rooms[0].x;
-                playerStartY = rooms[0].y;
+                player1_X = rooms[0].x;
+                player1_Y = rooms[0].y;
 
-                map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
+                player2_X = rooms[0].x + 1;
+                player2_Y = rooms[0].y;
+
+                map.VisualArr[player1_Y][player1_X] = player1.DrawPlayer();
+                map.VisualArr[player2_Y][player2_X] = player2.DrawPlayer();
                 playerSpawn = true;
             }
         }
 
         public void MovePlayer(ConsoleKey key)
         {
-
             if (key == ConsoleKey.DownArrow)
             {
-                if (isRoom(playerStartX, playerStartY + 1))
+                if (isRoom(player1_X, player1_Y + 1))
                 {
-                    playerStartY += 1;
-                    map.VisualArr[playerStartY - 1][playerStartX] = "█";
-                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
+                    player1_Y += 1;
+                    map.VisualArr[player1_Y - 1][player1_X] = " ";
                 }
             }
             if (key == ConsoleKey.UpArrow)
             {
-                if (isRoom(playerStartX, playerStartY - 1))
+                if (isRoom(player1_X, player1_Y - 1))
                 {
-                    playerStartY -= 1;
-                    map.VisualArr[playerStartY + 1][playerStartX] = "█";
-                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
+                    player1_Y -= 1;
+                    map.VisualArr[player1_Y + 1][player1_X] = " ";
                 }
             }
             if (key == ConsoleKey.LeftArrow)
             {
-                if (isRoom(playerStartX - 1, playerStartY))
+                if (isRoom(player1_X - 1, player1_Y))
                 {
-                    playerStartX -= 1;
-                    map.VisualArr[playerStartY][playerStartX + 1] = "█";
-                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
+                    player1_X -= 1;
+                    map.VisualArr[player1_Y][player1_X + 1] = " ";
                 }
             }
             if (key == ConsoleKey.RightArrow)
             {
-                if (isRoom(playerStartX + 1, playerStartY))
+                if (isRoom(player1_X + 1, player1_Y))
                 {
-                    playerStartX += 1;
-                    map.VisualArr[playerStartY][playerStartX - 1] = "█";
-                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer(); ;
+                    player1_X += 1;
+                    map.VisualArr[player1_Y][player1_X - 1] = " ";
                 }
             }
+            map.VisualArr[player1_Y][player1_X] = player1.DrawPlayer();
+
+
+
+
+            if (key == ConsoleKey.S)
+            {
+                if (isRoom(player2_X, player2_Y + 1))
+                {
+                    player2_Y += 1;
+                    map.VisualArr[player2_Y - 1][player2_X] = " ";
+                }
+            }
+            if (key == ConsoleKey.W)
+            {
+                if (isRoom(player2_X, player2_Y - 1))
+                {
+                    player2_Y -= 1;
+                    map.VisualArr[player2_Y + 1][player2_X] = " ";
+                }
+            }
+            if (key == ConsoleKey.A)
+            {
+                if (isRoom(player2_X - 1, player2_Y))
+                {
+                    player2_X -= 1;
+                    map.VisualArr[player2_Y][player2_X + 1] = " ";
+                }
+            }
+            if (key == ConsoleKey.D)
+            {
+                if (isRoom(player2_X + 1, player2_Y))
+                {
+                    player2_X += 1;
+                    map.VisualArr[player2_Y][player2_X - 1] = " ";
+                }
+            }
+            map.VisualArr[player2_Y][player2_X] = player2.DrawPlayer();
         }
 
         public bool isRoom(int x, int y)
         {
-            if (map.VisualArr[y][x] == "█")
+            if (map.VisualArr[y][x] == " ")
             {
                 return true;
             }

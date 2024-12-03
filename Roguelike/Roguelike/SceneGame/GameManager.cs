@@ -14,12 +14,34 @@ namespace Roguelike
         private int heightLevel = 30;
        
         private int hpPlayer1 = 10;
-        private int DamagePlayer1 = 2;
+        private int DamagePlayer1 = 2; 
+
+        private int hpPlayer2 = 10;
+        private int DamagePlayer2 = 2;
+
+        private Level level;
+
+        public bool twoPlayer = false;
+
+        public GameManager(bool twoPlayer) 
+        { 
+            this.twoPlayer = twoPlayer;
+        }
 
         public void Start()
         {
-            Player player1 = new Player(hpPlayer1, DamagePlayer1);
-            Level level = new Level(widhtLevel, heightLevel, player1);
+            if (twoPlayer)
+            {
+                Player player1 = new Player(hpPlayer1, DamagePlayer1);
+                Player player2 = new Player(hpPlayer2, DamagePlayer2);
+
+                level = new Level(widhtLevel, heightLevel, player1, player2);
+            }
+            else 
+            { 
+                Player player1 = new Player(hpPlayer1, DamagePlayer1);
+                level = new Level(widhtLevel, heightLevel, player1);
+            }
 
             while (true)
             {
@@ -29,9 +51,6 @@ namespace Roguelike
                 var key = Console.ReadKey(true).Key;
                 level.MovePlayer(key);
             }
-        }
-        private void HandleInput(ConsoleKey key)
-        {
         }
     }
 }

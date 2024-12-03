@@ -9,8 +9,6 @@ namespace Roguelike.SceneGame.Location
 {
     internal class Leaf
     {
-        private const int MIN_LEAF_SIZE = 6;
-
         public int x;
         public int y;
         public int width;
@@ -32,7 +30,7 @@ namespace Roguelike.SceneGame.Location
             this.height = height;
         }
 
-        public bool Split()
+        public bool Split(int MIN_LEAF_SIZE)
         {
             if (leftChild != null || rightChild != null)
             {

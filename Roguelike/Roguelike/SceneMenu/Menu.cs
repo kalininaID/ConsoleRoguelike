@@ -62,7 +62,7 @@ namespace Roguelike
         {
             if (selectLine == 0)
             {
-                GameManager manager = new GameManager();
+                GameManager manager = new GameManager(true);
                 manager.Start();
             }
 
