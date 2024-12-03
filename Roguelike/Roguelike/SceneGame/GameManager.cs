@@ -1,4 +1,4 @@
-﻿using Roguelike.SceneGame.Location;
+﻿using Roguelike;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,8 @@ namespace Roguelike
         private int widhtLevel = 60;
         private int heightLevel = 30;
 
-        private int max_leaf = 20;
-        private int min_leaf = 10;
+        private int max_leaf = 25;
+        private int min_leaf = 12;
 
         private int hpPlayer1 = 10;
         private int DamagePlayer1 = 2; 

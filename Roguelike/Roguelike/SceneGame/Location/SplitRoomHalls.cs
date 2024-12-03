@@ -16,8 +16,8 @@ namespace Roguelike
         public SplitRoomHalls(List<Room> roomAndHalls) 
         { 
             this.roomAndHalls = roomAndHalls;
-            this.halls = new List<Room>(); 
-            this.rooms = new List<Room>();
+            halls = new List<Room>(); 
+            rooms = new List<Room>();
         }
         public List<Room> GetRoom()
         {

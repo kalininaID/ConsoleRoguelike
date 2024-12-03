@@ -26,16 +26,16 @@ namespace Roguelike
             for (int i = 0; i < numberOfEnemies; i++)
             {
                 Room room = rooms[random.Next(rooms.Count)];
+
                 int x = random.Next(room.x, room.x + room.width);
                 int y = random.Next(room.y, room.y + room.height);
 
-
-                // Проверяем, что позиция не занята игроками или другими врагами
                 if (map.VisualArr[y][x] == " ")
                 {
-                    Enemy enemy = new Enemy(hp, damage, x, y); // Используем "E" как символ врага
+                    Enemy enemy = new Enemy(hp, damage, x, y); 
                     enemies.Add(enemy);
-                    map.VisualArr[y][x] = enemy.DrawEnemy(); // Рисуем врага на карте
+
+                    map.VisualArr[y][x] = enemy.DrawEnemy();
                 }
                 else 
                 {

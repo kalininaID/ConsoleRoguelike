@@ -1,4 +1,4 @@
-﻿using Roguelike.SceneGame.Location;
+﻿using Roguelike;
 using System;
 
 namespace Roguelike

@@ -1,11 +1,12 @@
 ﻿using Roguelike.Components;
+using Roguelike.SceneGame.Location;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Roguelike.SceneGame.Location
+namespace Roguelike
 {
     internal class Level
     {
@@ -17,8 +18,10 @@ namespace Roguelike.SceneGame.Location
 
         private Frame map;
         private EnemySpawner enemySpawner;
+        private ItemSpawner itemSpawner;
         private List<Room> rooms;
         private List<Room> halls;
+        private Random random;
 
         private Player player1;
         private Player player2;
@@ -30,7 +33,8 @@ namespace Roguelike.SceneGame.Location
         private int player2_Y;
 
         private bool playerSpawn = false;
-        private int enemyCount = 5;
+        private int enemyCount;
+        private int itemCount;
 
         public Level(int levelWidth, int levelHeight, int max_leaf, int min_leaf, Player player1, Player? player2 = null)
         {
@@ -49,7 +53,13 @@ namespace Roguelike.SceneGame.Location
             map = new Frame(levelWidth, levelHeight, "█", 2);
             map.DrawBorders(typeBorder: Frame.TypeBorder.EXRTABOLD);
 
+
+            random = new Random();
+            enemyCount = random.Next(1, 6);
+            itemCount = random.Next(3, 10);
+
             enemySpawner = new EnemySpawner();
+            itemSpawner = new ItemSpawner();
             
             Generate();
         }
@@ -89,7 +99,8 @@ namespace Roguelike.SceneGame.Location
             PrintRoom();
 
             SplitRoomHalls split = new SplitRoomHalls(rooms);
-            enemySpawner.SpawnEnemies(map, split.GetRoom(), enemyCount); // Например, спавним 5 врагов
+            enemySpawner.SpawnEnemies(map, split.GetRoom(), enemyCount); 
+            itemSpawner.SpawnItems(map, split.GetRoom(), itemCount); 
         }
 
         public string[][] PrintRoom()
