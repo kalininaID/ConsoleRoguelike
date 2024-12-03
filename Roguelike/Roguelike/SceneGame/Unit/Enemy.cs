@@ -16,11 +16,12 @@ namespace Roguelike
             this.damage = damage;
             this.x = x;
             this.y = y;
-            img = "🧟";
+            icon = "🧟";
+            //icon = "E";
         }
         public string DrawEnemy()
         {
-            return img;
+            return icon;
         }
     }
 }

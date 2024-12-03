@@ -11,7 +11,7 @@ namespace Roguelike.SceneGame.Location
 {
     internal class ItemSpawner
     {
-        private List<Items> items;
+        public List<Items> items;
         private Random random;
 
         public ItemSpawner()

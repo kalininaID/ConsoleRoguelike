@@ -10,7 +10,7 @@ namespace Roguelike
     {
         public int hp;
         public int damage;
-        public string img;
+        public string icon;
 
         public void Die()
         {

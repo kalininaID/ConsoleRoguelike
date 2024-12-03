@@ -25,6 +25,7 @@ namespace Roguelike
                 if (line.StartsWith(playerName))
                 {
                     playerFound = true;
+                    continue;
                 }
                 else
                 {

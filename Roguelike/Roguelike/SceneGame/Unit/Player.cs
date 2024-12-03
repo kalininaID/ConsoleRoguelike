@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roguelike.SceneGame.Unit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,24 +11,28 @@ namespace Roguelike
     {
         public int level;
         public int experience;
-        public List<string> Inventory;
+        public List<Items> Inventory;
 
         public Player(int hp, int damage)
         {
             this.hp = hp;
             this.damage = damage;
-            img = "😏";
+            icon = "😏";
             level = 1;
             experience = 0;
-            Inventory = [];
+            Inventory = new List<Items>();
         }
 
         public string DrawPlayer()
         {
-            return img;
+            return icon;
+        }
+        public void AddToInventory(Items item)
+        {
+            Inventory.Add(item);
         }
 
-        public void UseItem(string item)
+        public void UseItem(Items item)
         {
             if (Inventory.Contains(item))
             {
@@ -51,5 +56,6 @@ namespace Roguelike
             level++;
             // Логика повышения уровня (например, увеличение hp или damage)
         }
+
     }
 }

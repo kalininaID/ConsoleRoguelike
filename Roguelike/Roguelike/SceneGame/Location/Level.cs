@@ -1,7 +1,9 @@
 ﻿using Roguelike.Components;
 using Roguelike.SceneGame.Location;
+using Roguelike.SceneGame.Unit;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -141,9 +143,14 @@ namespace Roguelike
             }
         }
 
-        public void MovePlayer1(ConsoleKey key)
+        public void MovePlayer1(ConsoleKey key, Dictionary<string, string> controls)
         {
-            if (key == ConsoleKey.DownArrow)
+            string upKey = controls["up"];
+            string downKey = controls["down"];
+            string leftKey = controls["left"];
+            string rightKey = controls["right"];
+
+            if (key.ToString() == downKey)
             {
                 if (isRoom(player1_X, player1_Y + 1))
                 {
@@ -151,7 +158,7 @@ namespace Roguelike
                     map.VisualArr[player1_Y - 1][player1_X] = "  ";
                 }
             }
-            if (key == ConsoleKey.UpArrow)
+            else if (key.ToString() == upKey)
             {
                 if (isRoom(player1_X, player1_Y - 1))
                 {
@@ -159,7 +166,7 @@ namespace Roguelike
                     map.VisualArr[player1_Y + 1][player1_X] = "  ";
                 }
             }
-            if (key == ConsoleKey.LeftArrow)
+            else if (key.ToString() == leftKey)
             {
                 if (isRoom(player1_X - 1, player1_Y))
                 {
@@ -167,7 +174,7 @@ namespace Roguelike
                     map.VisualArr[player1_Y][player1_X + 1] = "  ";
                 }
             }
-            if (key == ConsoleKey.RightArrow)
+            else if (key.ToString() == rightKey)
             {
                 if (isRoom(player1_X + 1, player1_Y))
                 {
@@ -178,9 +185,14 @@ namespace Roguelike
             map.VisualArr[player1_Y][player1_X] = player1.DrawPlayer();
         }
 
-        public void MovePlayer2(ConsoleKey key)
+        public void MovePlayer2(ConsoleKey key, Dictionary<string, string> controls)
         {
-            if (key == ConsoleKey.S)
+            string upKey = controls["up"];
+            string downKey = controls["down"];
+            string leftKey = controls["left"];
+            string rightKey = controls["right"];
+
+            if (key.ToString() == downKey)
             {
                 if (isRoom(player2_X, player2_Y + 1))
                 {
@@ -188,7 +200,7 @@ namespace Roguelike
                     map.VisualArr[player2_Y - 1][player2_X] = "  ";
                 }
             }
-            if (key == ConsoleKey.W)
+            else if (key.ToString() == upKey)
             {
                 if (isRoom(player2_X, player2_Y - 1))
                 {
@@ -196,7 +208,7 @@ namespace Roguelike
                     map.VisualArr[player2_Y + 1][player2_X] = "  ";
                 }
             }
-            if (key == ConsoleKey.A)
+            else if (key.ToString() == leftKey)
             {
                 if (isRoom(player2_X - 1, player2_Y))
                 {
@@ -204,7 +216,7 @@ namespace Roguelike
                     map.VisualArr[player2_Y][player2_X + 1] = "  ";
                 }
             }
-            if (key == ConsoleKey.D)
+            else if (key.ToString() == rightKey)
             {
                 if (isRoom(player2_X + 1, player2_Y))
                 {
@@ -217,9 +229,22 @@ namespace Roguelike
 
         public bool isRoom(int x, int y)
         {
-            if (map.VisualArr[y][x] == "  ")
+            if (map.VisualArr[y][x] == "  " || isItem(x, y))
             {
                 return true;
+            }
+            return false;
+        }
+
+        public bool isItem(int x, int y)
+        {
+            foreach (var item in itemSpawner.items) 
+            {
+                if (map.VisualArr[y][x] == item.icon)
+                {
+                    player1.AddToInventory(item);
+                    return true;
+                }
             }
             return false;
         }

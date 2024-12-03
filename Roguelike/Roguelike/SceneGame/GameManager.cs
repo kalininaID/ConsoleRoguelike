@@ -29,10 +29,13 @@ namespace Roguelike
         public GameManager(bool twoPlayer) 
         { 
             this.twoPlayer = twoPlayer;
+
         }
 
         public void Start()
         {
+            var player1Controls = Settings.Get("Player 1");
+            var player2Controls = Settings.Get("Player 2");
             if (twoPlayer)
             {
                 Player player1 = new Player(hpPlayer1, DamagePlayer1);
@@ -41,8 +44,9 @@ namespace Roguelike
                 level = new Level(widhtLevel, heightLevel, max_leaf, min_leaf, player1, player2);
             }
             else 
-            { 
+            {
                 Player player1 = new Player(hpPlayer1, DamagePlayer1);
+
                 level = new Level(widhtLevel, heightLevel, max_leaf, min_leaf, player1);
             }
 
@@ -51,9 +55,11 @@ namespace Roguelike
                 Console.Clear();
                 level.PrintLevel();
 
-                var key = Console.ReadKey(true).Key;
-                level.MovePlayer1(key);
-                if (twoPlayer) level.MovePlayer2(key);
+                //var key = Console.ReadKey(true).Key;
+                ConsoleKey key = Console.ReadKey().Key;
+
+                level.MovePlayer1(key, player1Controls);
+                if (twoPlayer) level.MovePlayer2(key, player2Controls);
             }
         }
     }
