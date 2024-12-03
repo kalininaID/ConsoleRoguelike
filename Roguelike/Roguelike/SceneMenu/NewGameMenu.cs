@@ -34,6 +34,8 @@ namespace Roguelike.SceneMenu
         private bool readyP1 = false;
         private bool readyP2 = false;
 
+        private bool existsP2 = false;
+
         private Art img = new Art();
         private bool flagChangeControll = false;
 
@@ -63,15 +65,26 @@ namespace Roguelike.SceneMenu
                 fieldP2.DrawBorders(colorBorder: Colors.GRAY);
 
                 fieldP1 = CreatePlayer(fieldP1, "Player 1", true);
-                fieldP2 = CreatePlayer(fieldP2, "Player 2", readyP2, del: true);
+                fieldP2 = CreatePlayer(fieldP2, "Player 2", existsP2, del: true);
 
                 if (readyP1)
-                    PlayerReady(fieldP1);
+                    PlayerReady(fieldP1, readyP1);
 
                 if (readyP2)
-                    PlayerReady(fieldP2);
+                    PlayerReady(fieldP2, readyP2);
 
                 DisplayMenu();
+
+                if (readyP1)
+                {
+                    if (existsP2 && !readyP2)
+                    {
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
 
                 var key = Console.ReadKey(true).Key;
 
@@ -89,6 +102,9 @@ namespace Roguelike.SceneMenu
                     HandleInput(key);
                 }
             }
+
+            GameManager manager = new GameManager();
+            manager.Start();
         }
 
         public Frame CreatePlayer(Frame playerWindow, string namePlayer = "Player 1", bool inGame = false, bool del = false)
@@ -178,16 +194,16 @@ namespace Roguelike.SceneMenu
             window.Draw();
 
             string changeP2 = "";
-            if (readyP2)
+            if (existsP2)
             {
                changeP2 = "E - удалить 2 игрока; ";
             }
             Console.WriteLine($"0 - изменить управление; {changeP2}");
         }
 
-        private void PlayerReady(Frame field)
+        private void PlayerReady(Frame field, bool ready)
         {
-            if (readyP1)
+            if (ready)
             {
                 field.Paint(Colors.GREEN);
             }
@@ -206,14 +222,16 @@ namespace Roguelike.SceneMenu
             if (key == ConsoleKey.Enter)
             {
                 int a = 2;
+
+                readyP2 = !readyP2;
                 //fieldP1.Array = PlayerReady(fieldP2.Array);
                 //закрыть возможности для 1 перснажа пометить что он готов
             }
 
             if (key == ConsoleKey.E && !readyP2)
             {
-                readyP2 = !readyP2;
-                if (readyP2)
+                existsP2 = !existsP2;
+                if (existsP2)
                     if (cursorP1 == cursorP2)
                         MoveCursorCharacter(false, false);
             }
@@ -226,7 +244,7 @@ namespace Roguelike.SceneMenu
             {
                 MoveCursorCharacter(true, true);
 
-                if (cursorP1 == cursorP2 && readyP2)
+                if (cursorP1 == cursorP2 && existsP2)
                     MoveCursorCharacter(true, true);
             }
             if (key == ConsoleKey.D && !readyP1)
