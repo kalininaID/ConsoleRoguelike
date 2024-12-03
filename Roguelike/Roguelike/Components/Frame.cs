@@ -21,10 +21,10 @@ namespace Roguelike.Components
             EXRTABOLD
         }
 
-        public Frame(int wight, int hieght)
+        public Frame(int wight, int height, string symbol = " ", int color = 0) 
         {
-            VisualArr = ArrFunc.CreateEmptyArray(wight, hieght, " ");
-            ColorsArr = ArrFunc.CreateEmptyArray(wight, hieght, 0);
+            VisualArr = ArrFunc.CreateEmptyArray(wight, height, symbol);
+            ColorsArr = ArrFunc.CreateEmptyArray(wight, height, color);
         }
 
         public void DrawBorders(Colors colorBorder = Colors.WHITE, TypeBorder typeBorder = TypeBorder.STANDARD)
