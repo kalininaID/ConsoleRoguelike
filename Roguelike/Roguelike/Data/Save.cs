@@ -12,12 +12,12 @@ namespace Roguelike.Data
 
         public static void ClearFile()
         {
-            File.WriteAllText(filePath, string.Empty);
+            File.WriteAllText(filePath, "");
         }
 
         public static bool HasData()
         {
-            return File.Exists(filePath) && new FileInfo(filePath).Length > 0;
+            return File.Exists(filePath) && new FileInfo(filePath).Length > 2;
         }
 
         public static void Set(int idPlayer1, int idPlayer2 = -1)

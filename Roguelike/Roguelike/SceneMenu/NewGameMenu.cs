@@ -10,8 +10,6 @@ using static Roguelike.Components.Frame;
 
 namespace Roguelike.SceneMenu
 {
-
-
     internal class NewGameMenu
     {
         private Frame window;
@@ -74,31 +72,51 @@ namespace Roguelike.SceneMenu
                 if (readyP2)
                     PlayerReady(fieldP2, readyP2);
 
-                DisplayMenu();
 
                 if (readyP1)
                 {
                     if (existsP2 && !readyP2){}
                     else 
                     {
-                        if (Save.HasData())
+                        bool flagSave = Save.HasData();
+                        if (!flagSave)
                         {
                             Save.Set(cursorP1, existsP2 ? cursorP2 : -1);
                             break;
                         }
                         else
                         {
-                            dialog = new Dialog("1212", 12, 12);
+                            if (dialog.flagOpen == false)
+                            {
+                                dialog = new Dialog("Найдено сохранение!\nПерезаписать его?");
+                                dialog.flagOpen = true;
+                            }
                         }
                     }
                 }
+                
+                DisplayMenu();
 
                 var key = Console.ReadKey(true).Key;
 
                 if (dialog.flagOpen)
                 {
                     dialog.Controller(key);
-                } else if (flagChangeControll)
+                    
+                    if (dialog.flagOpen == false)
+                    {
+                        if (dialog.isOk && !dialog.esc)
+                        {
+                            Save.ClearFile();
+                        } else
+                        {
+                            readyP1 = false;
+                            readyP2 = false;
+
+                        }
+                    }
+                }
+                else if (flagChangeControll)
                 {
                     popUp.ChangeControll(key);
 
@@ -201,8 +219,10 @@ namespace Roguelike.SceneMenu
                 window.ColorsArr = ArrFunc.ArrInArr(window.ColorsArr, popUp.ColorsArr, line: window.ColorsArr.Length / 2 - 7);
             }
 
-            if (dialog.flagOpen)
+             if (dialog.flagOpen)
             {
+                dialog.Update();
+
                 window.VisualArr = ArrFunc.ArrInArr(window.VisualArr, dialog.VisualArr, line: window.VisualArr.Length / 2 - 7);
                 window.ColorsArr = ArrFunc.ArrInArr(window.ColorsArr, dialog.ColorsArr, line: window.ColorsArr.Length / 2 - 7);
             }
