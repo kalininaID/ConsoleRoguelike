@@ -89,8 +89,8 @@ namespace Roguelike.SceneGame.Location
                 // если у этого листа есть и левый, и правый дочерние листья, то создаём между ними коридор
                 if (leftChild != null && rightChild != null)
                 {
-                    List<Room> hallRooms = CreateHall(leftChild.GetRoom(), rightChild.GetRoom());
-                    roomsList.AddRange(hallRooms);
+                    List<Room> newHallRooms = CreateHall(leftChild.GetRoom(), rightChild.GetRoom());
+                    roomsList.AddRange(newHallRooms);
                 }
             }
             else
@@ -104,9 +104,8 @@ namespace Roguelike.SceneGame.Location
                 room = new Room(x + roomPos.X, y + roomPos.Y, roomSize.X, roomSize.Y);
                 roomsList.Add(room); // Добавляем созданную комнату в список
             }
-            return roomsList; // Возвращаем список комнат
+            return roomsList;// Возвращаем список комнат
         }
-
         public Room GetRoom()
         {
             // Если у текущего листа есть комната, возвращаем её
