@@ -8,13 +8,19 @@ namespace Roguelike
 {
     internal class Enemy : Unit
     {
-        public Enemy(int hp, int damage) { 
+        public int x;
+        public int y;
+
+        public Enemy(int hp, int damage, int x, int y) { 
             this.hp = hp;
             this.damage = damage;
+            this.x = x;
+            this.y = y;
+            img = "E";
         }
-
-        private void Move()
+        public string DrawEnemy()
         {
+            return img;
         }
     }
 }

@@ -9,13 +9,14 @@ namespace Roguelike.SceneGame.Location
 {
     internal class Level
     {
-        private const int MAX_LEAF_SIZE = 20;
-        private const int MIN_LEAF_SIZE = 10;
+        private int max_leaf;
+        private int min_leaf;
 
         private int levelWidth;
         private int levelHeight;
 
         private Frame map;
+        private EnemySpawner enemySpawner;
         private List<Room> rooms;
         private List<Room> halls;
 
@@ -29,11 +30,16 @@ namespace Roguelike.SceneGame.Location
         private int player2_Y;
 
         private bool playerSpawn = false;
+        private int enemyCount = 5;
 
-        public Level(int levelWidth, int levelHeight, Player player1, Player? player2 = null)
+        public Level(int levelWidth, int levelHeight, int max_leaf, int min_leaf, Player player1, Player? player2 = null)
         {
             this.levelWidth = levelWidth;
             this.levelHeight = levelHeight;
+
+            this.max_leaf = max_leaf;
+            this.min_leaf = min_leaf;
+
             this.player1 = player1;
             if (player2 != null) 
             { 
@@ -43,6 +49,8 @@ namespace Roguelike.SceneGame.Location
             map = new Frame(levelWidth, levelHeight, "█", 2);
             map.DrawBorders(typeBorder: Frame.TypeBorder.EXRTABOLD);
 
+            enemySpawner = new EnemySpawner();
+            
             Generate();
         }
 
@@ -65,9 +73,9 @@ namespace Roguelike.SceneGame.Location
                     Leaf l = leafs[i];
                     if (l.leftChild == null && l.rightChild == null)
                     {
-                        if (l.width > MAX_LEAF_SIZE || l.height > MAX_LEAF_SIZE)
+                        if (l.width > max_leaf || l.height > max_leaf)
                         {
-                            if (l.Split(MIN_LEAF_SIZE))
+                            if (l.Split(min_leaf))
                             {
                                 leafs.Add(l.leftChild);
                                 leafs.Add(l.rightChild);
@@ -79,6 +87,9 @@ namespace Roguelike.SceneGame.Location
             }
             rooms = root.CreateRooms();
             PrintRoom();
+
+            SplitRoomHalls split = new SplitRoomHalls(rooms);
+            enemySpawner.SpawnEnemies(map, split.GetRoom(), enemyCount); // Например, спавним 5 врагов
         }
 
         public string[][] PrintRoom()
@@ -119,7 +130,7 @@ namespace Roguelike.SceneGame.Location
             }
         }
 
-        public void MovePlayer(ConsoleKey key)
+        public void MovePlayer1(ConsoleKey key)
         {
             if (key == ConsoleKey.DownArrow)
             {
@@ -154,10 +165,10 @@ namespace Roguelike.SceneGame.Location
                 }
             }
             map.VisualArr[player1_Y][player1_X] = player1.DrawPlayer();
+        }
 
-
-
-
+        public void MovePlayer2(ConsoleKey key)
+        {
             if (key == ConsoleKey.S)
             {
                 if (isRoom(player2_X, player2_Y + 1))

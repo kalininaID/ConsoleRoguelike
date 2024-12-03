@@ -12,7 +12,10 @@ namespace Roguelike
     {
         private int widhtLevel = 60;
         private int heightLevel = 30;
-       
+
+        private int max_leaf = 20;
+        private int min_leaf = 10;
+
         private int hpPlayer1 = 10;
         private int DamagePlayer1 = 2; 
 
@@ -35,12 +38,12 @@ namespace Roguelike
                 Player player1 = new Player(hpPlayer1, DamagePlayer1);
                 Player player2 = new Player(hpPlayer2, DamagePlayer2);
 
-                level = new Level(widhtLevel, heightLevel, player1, player2);
+                level = new Level(widhtLevel, heightLevel, max_leaf, min_leaf, player1, player2);
             }
             else 
             { 
                 Player player1 = new Player(hpPlayer1, DamagePlayer1);
-                level = new Level(widhtLevel, heightLevel, player1);
+                level = new Level(widhtLevel, heightLevel, max_leaf, min_leaf, player1);
             }
 
             while (true)
@@ -49,7 +52,8 @@ namespace Roguelike
                 level.PrintLevel();
 
                 var key = Console.ReadKey(true).Key;
-                level.MovePlayer(key);
+                level.MovePlayer1(key);
+                if (twoPlayer) level.MovePlayer2(key);
             }
         }
     }

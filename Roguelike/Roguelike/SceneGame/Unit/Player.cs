@@ -12,8 +12,6 @@ namespace Roguelike
         public int experience;
         public List<string> Inventory;
 
-
-
         public Player(int hp, int damage)
         {
             this.hp = hp;
