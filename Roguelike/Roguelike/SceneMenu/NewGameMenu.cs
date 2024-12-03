@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Roguelike.Components;
+using Roguelike.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Roguelike.Components.Frame;
 
@@ -40,7 +41,7 @@ namespace Roguelike.SceneMenu
         private bool flagChangeControll = false;
 
         PopUpChangeControll popUp = new PopUpChangeControll();
-
+        Dialog dialog = new Dialog();
         public void Start()
         {
             while (true)
@@ -77,24 +78,33 @@ namespace Roguelike.SceneMenu
 
                 if (readyP1)
                 {
-                    if (existsP2 && !readyP2)
+                    if (existsP2 && !readyP2){}
+                    else 
                     {
-                    }
-                    else
-                    {
-                        break;
+                        if (Save.HasData())
+                        {
+                            Save.Set(cursorP1, existsP2 ? cursorP2 : -1);
+                            break;
+                        }
+                        else
+                        {
+                            dialog = new Dialog("1212", 12, 12);
+                        }
                     }
                 }
 
                 var key = Console.ReadKey(true).Key;
 
-                if (flagChangeControll)
+                if (dialog.flagOpen)
+                {
+                    dialog.Controller(key);
+                } else if (flagChangeControll)
                 {
                     popUp.ChangeControll(key);
 
                     if (popUp.isClose)
                     {
-                        flagChangeControll = false;
+                        flagChangeControll = false; 
                         popUp.Clear();
                     }
                 } else
@@ -191,6 +201,12 @@ namespace Roguelike.SceneMenu
                 window.ColorsArr = ArrFunc.ArrInArr(window.ColorsArr, popUp.ColorsArr, line: window.ColorsArr.Length / 2 - 7);
             }
 
+            if (dialog.flagOpen)
+            {
+                window.VisualArr = ArrFunc.ArrInArr(window.VisualArr, dialog.VisualArr, line: window.VisualArr.Length / 2 - 7);
+                window.ColorsArr = ArrFunc.ArrInArr(window.ColorsArr, dialog.ColorsArr, line: window.ColorsArr.Length / 2 - 7);
+            }
+
             window.Draw();
 
             string changeP2 = "";
@@ -213,19 +229,11 @@ namespace Roguelike.SceneMenu
         {
             if (key == ConsoleKey.Spacebar)
             {
-                int a = 2;
-
                 readyP1 = !readyP1;
-                //
-                //закрыть возможности для 1 перснажа пометить что он готов
             }
             if (key == ConsoleKey.Enter)
             {
-                int a = 2;
-
                 readyP2 = !readyP2;
-                //fieldP1.Array = PlayerReady(fieldP2.Array);
-                //закрыть возможности для 1 перснажа пометить что он готов
             }
 
             if (key == ConsoleKey.E && !readyP2)

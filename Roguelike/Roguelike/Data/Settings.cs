@@ -19,18 +19,15 @@ namespace Roguelike
 
             foreach (string line in lines)
             {
-                // Пропускаем пустые строки
                 if (string.IsNullOrWhiteSpace(line) && playerFound)
                     break;
 
-                // Проверяем, является ли строка названием игрока
                 if (line.StartsWith(playerName))
                 {
                     playerFound = true;
                 }
                 else
                 {
-                    // Разделяем строку на ключ и значение
                     var parts = line.Split(new[] { ':' }, 2);
                     if (parts.Length == 2)
                     {
@@ -49,7 +46,7 @@ namespace Roguelike
             if (!File.Exists(filePath))
             {
                 Console.WriteLine("Файл не найден: " + filePath);
-                return; // Или выбросьте исключение
+                return;
             }
 
             string[] lines = File.ReadAllLines(filePath);

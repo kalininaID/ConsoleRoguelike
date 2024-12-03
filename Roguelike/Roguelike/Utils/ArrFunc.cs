@@ -43,48 +43,44 @@ namespace Roguelike
 
             return joinArr;
         }
-        public static string[][] ArrInArr(string[][] mainArr, string[][] littleArr, int line = 0, Position pos = Position.Center)
+        public static string[][] ArrInArr(string[][] mainArr, string[][] littleArr, int line = 0, int margin = 0, Position pos = Position.Center)
         {
-            int buff = 0;
-
             if (pos == Position.Center)
             {
-                buff = (mainArr[0].Length - littleArr[0].Length) / 2;
+                margin = (mainArr[0].Length - littleArr[0].Length) / 2;
             }
             if (pos == Position.Right)
             {
-                buff = mainArr[0].Length - littleArr[0].Length;
+                margin = mainArr[0].Length - littleArr[0].Length - margin;
             }
 
             for (int i = 0; i < littleArr.Length; i++)
             {
-                for (int j = buff; j < buff + littleArr[0].Length; j++)
+                for (int j = margin; j < margin + littleArr[0].Length; j++)
                 {
-                    mainArr[line + i][j] = littleArr[i][j - buff];
+                    mainArr[line + i][j] = littleArr[i][j - margin];
                 }
             }
 
             return mainArr;
         }
 
-        public static int[][] ArrInArr(int[][] mainArr, int[][] littleArr, int line = 0, Position pos = Position.Center)
+        public static int[][] ArrInArr(int[][] mainArr, int[][] littleArr, int line = 0, int margin = 0, Position pos = Position.Center)
         {
-            int buff = 0;
-
             if (pos == Position.Center)
             {
-                buff = (mainArr[0].Length - littleArr[0].Length) / 2;
+                margin = (mainArr[0].Length - littleArr[0].Length) / 2;
             }
             if (pos == Position.Right)
             {
-                buff = mainArr[0].Length - littleArr[0].Length;
+                margin = mainArr[0].Length - littleArr[0].Length - margin;
             }
 
             for (int i = 0; i < littleArr.Length; i++)
             {
-                for (int j = buff; j < buff + littleArr[0].Length; j++)
+                for (int j = margin; j < margin + littleArr[0].Length; j++)
                 {
-                    mainArr[line + i][j] = littleArr[i][j - buff];
+                    mainArr[line + i][j] = littleArr[i][j - margin];
                 }
             }
 
@@ -93,23 +89,21 @@ namespace Roguelike
 
         public static string[][] TextInArr(string[][] arr, string text, int line = 0, int margin = 0, Position pos = Position.Center)
         {
-            int buff = margin;
-
             if (pos == Position.Center)
             {
                 if (arr[0].Length != text.Length)
                 {
-                    buff = buff + (arr[0].Length - text.Length) / 2;
+                    margin = margin + (arr[0].Length - text.Length) / 2;
                 }
             }
             if (pos == Position.Right)
             {
-                buff = arr[0].Length - text.Length - margin;
+                margin = arr[0].Length - text.Length - margin;
             }
 
-            for (int i = buff; i < buff + text.Length; i++)
+            for (int i = margin; i < margin + text.Length; i++)
             {
-                arr[line][i] = text[i - buff].ToString();
+                arr[line][i] = text[i - margin].ToString();
             }
             return arr;
         }
