@@ -30,7 +30,7 @@ namespace Roguelike
                 int x = random.Next(room.x, room.x + room.width);
                 int y = random.Next(room.y, room.y + room.height);
 
-                if (map.VisualArr[y][x] == " ")
+                if (map.VisualArr[y][x] == "  ")
                 {
                     Enemy enemy = new Enemy(hp, damage, x, y); 
                     enemies.Add(enemy);

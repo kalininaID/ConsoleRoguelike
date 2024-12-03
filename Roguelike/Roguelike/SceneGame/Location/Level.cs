@@ -50,7 +50,7 @@ namespace Roguelike
                 this.player2 = player2;
             }
 
-            map = new Frame(levelWidth, levelHeight, "█", 2);
+            map = new Frame(levelWidth, levelHeight, "██", 2);
             map.DrawBorders(typeBorder: Frame.TypeBorder.EXRTABOLD);
 
 
@@ -112,7 +112,7 @@ namespace Roguelike
                 {
                     for (int j = room.x; j < room.x + room.width; j++)
                     {
-                        map.VisualArr[i][j] = " ";
+                        map.VisualArr[i][j] = "  ";
                     }
                 }
             }
@@ -127,7 +127,7 @@ namespace Roguelike
 
         public void PrintPlayer()
         {
-            if (map.VisualArr[rooms[0].y][rooms[0].x] == " " && !playerSpawn)
+            if (map.VisualArr[rooms[0].y][rooms[0].x] == "  " && !playerSpawn)
             {
                 player1_X = rooms[0].x;
                 player1_Y = rooms[0].y;
@@ -148,7 +148,7 @@ namespace Roguelike
                 if (isRoom(player1_X, player1_Y + 1))
                 {
                     player1_Y += 1;
-                    map.VisualArr[player1_Y - 1][player1_X] = " ";
+                    map.VisualArr[player1_Y - 1][player1_X] = "  ";
                 }
             }
             if (key == ConsoleKey.UpArrow)
@@ -156,7 +156,7 @@ namespace Roguelike
                 if (isRoom(player1_X, player1_Y - 1))
                 {
                     player1_Y -= 1;
-                    map.VisualArr[player1_Y + 1][player1_X] = " ";
+                    map.VisualArr[player1_Y + 1][player1_X] = "  ";
                 }
             }
             if (key == ConsoleKey.LeftArrow)
@@ -164,7 +164,7 @@ namespace Roguelike
                 if (isRoom(player1_X - 1, player1_Y))
                 {
                     player1_X -= 1;
-                    map.VisualArr[player1_Y][player1_X + 1] = " ";
+                    map.VisualArr[player1_Y][player1_X + 1] = "  ";
                 }
             }
             if (key == ConsoleKey.RightArrow)
@@ -172,7 +172,7 @@ namespace Roguelike
                 if (isRoom(player1_X + 1, player1_Y))
                 {
                     player1_X += 1;
-                    map.VisualArr[player1_Y][player1_X - 1] = " ";
+                    map.VisualArr[player1_Y][player1_X - 1] = "  ";
                 }
             }
             map.VisualArr[player1_Y][player1_X] = player1.DrawPlayer();
@@ -185,7 +185,7 @@ namespace Roguelike
                 if (isRoom(player2_X, player2_Y + 1))
                 {
                     player2_Y += 1;
-                    map.VisualArr[player2_Y - 1][player2_X] = " ";
+                    map.VisualArr[player2_Y - 1][player2_X] = "  ";
                 }
             }
             if (key == ConsoleKey.W)
@@ -193,7 +193,7 @@ namespace Roguelike
                 if (isRoom(player2_X, player2_Y - 1))
                 {
                     player2_Y -= 1;
-                    map.VisualArr[player2_Y + 1][player2_X] = " ";
+                    map.VisualArr[player2_Y + 1][player2_X] = "  ";
                 }
             }
             if (key == ConsoleKey.A)
@@ -201,7 +201,7 @@ namespace Roguelike
                 if (isRoom(player2_X - 1, player2_Y))
                 {
                     player2_X -= 1;
-                    map.VisualArr[player2_Y][player2_X + 1] = " ";
+                    map.VisualArr[player2_Y][player2_X + 1] = "  ";
                 }
             }
             if (key == ConsoleKey.D)
@@ -209,7 +209,7 @@ namespace Roguelike
                 if (isRoom(player2_X + 1, player2_Y))
                 {
                     player2_X += 1;
-                    map.VisualArr[player2_Y][player2_X - 1] = " ";
+                    map.VisualArr[player2_Y][player2_X - 1] = "  ";
                 }
             }
             map.VisualArr[player2_Y][player2_X] = player2.DrawPlayer();
@@ -217,7 +217,7 @@ namespace Roguelike
 
         public bool isRoom(int x, int y)
         {
-            if (map.VisualArr[y][x] == " ")
+            if (map.VisualArr[y][x] == "  ")
             {
                 return true;
             }

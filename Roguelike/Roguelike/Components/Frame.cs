@@ -71,7 +71,13 @@ namespace Roguelike.Components
                         if (i == 0 || i == VisualArr.Length - 1)
                         {
                             ColorsArr[i][j] = (int)colorBorder;
-                            VisualArr[i][j] = border[4];
+                            if (VisualArr[i][j].Length > 1)
+                            {
+                                VisualArr[i][j] = border[4] + border[4];
+                            } else
+                            {
+                                VisualArr[i][j] = border[4];
+                            }
                         }
                         if (j==0 || j == VisualArr[0].Length - 1)
                         {

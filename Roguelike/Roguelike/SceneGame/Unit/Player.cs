@@ -16,7 +16,7 @@ namespace Roguelike
         {
             this.hp = hp;
             this.damage = damage;
-            img = "*";
+            img = "😏";
             level = 1;
             experience = 0;
             Inventory = [];

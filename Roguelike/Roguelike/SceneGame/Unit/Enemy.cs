@@ -16,7 +16,7 @@ namespace Roguelike
             this.damage = damage;
             this.x = x;
             this.y = y;
-            img = "E";
+            img = "🧟";
         }
         public string DrawEnemy()
         {

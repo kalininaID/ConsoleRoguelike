@@ -226,7 +226,7 @@ namespace Roguelike.SceneMenu
                 window.VisualArr = ArrFunc.ArrInArr(window.VisualArr, dialog.VisualArr, line: window.VisualArr.Length / 2 - 7);
                 window.ColorsArr = ArrFunc.ArrInArr(window.ColorsArr, dialog.ColorsArr, line: window.ColorsArr.Length / 2 - 7);
             }
-            window.VisualArr[5][5] = "😀";
+            window.VisualArr[5][48] = "😀";
             window.Draw();
 
             string changeP2 = "";

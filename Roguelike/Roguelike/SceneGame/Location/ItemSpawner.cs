@@ -31,7 +31,7 @@ namespace Roguelike.SceneGame.Location
 
                 int itmID = random.Next(1, 6);
 
-                if (map.VisualArr[y][x] == " ")
+                if (map.VisualArr[y][x] == "  ")
                 {
                     Items item = new Items(itmID);
                     items.Add(item);
