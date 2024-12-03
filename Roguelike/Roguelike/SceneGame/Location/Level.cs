@@ -14,7 +14,7 @@ namespace Roguelike.SceneGame.Location
         private int levelWidth;
         private int levelHeight;
 
-        private string[][] map;
+        private Frame map;
         private List<Room> rooms;
         private List<Room> halls;
 
@@ -29,8 +29,8 @@ namespace Roguelike.SceneGame.Location
             this.levelHeight = levelHeight;
             this.player1 = player1;
 
-            map = FrameLevel();
-            // map = new Frame(levelWidth, levelHeight);
+            map = new Frame(levelWidth, levelHeight);
+            map.DrawBorders();
             Generate();
         }
 
@@ -66,50 +66,10 @@ namespace Roguelike.SceneGame.Location
                 }
             }
             rooms = root.CreateRooms();
-            FrameRoom();
+            PrintRoom();
         }
 
-        public string[][] FrameLevel() 
-        {
-            // Создаем рамку уровня
-            map = new string[levelHeight][];
-
-            for (int i = 0; i < levelHeight; i++)
-            {
-                map[i] = new string[levelWidth];
-
-                for (int j = 0; j < levelWidth; j++)
-                    map[i][j] = " ";
-            }
-
-            for (int x = 0; x < levelHeight; x++)
-            {
-                for (int y = 0; y < levelWidth; y++)
-                {
-                    if (y == 0 || y == levelWidth - 1)
-                    {
-                        if (x != 0 && x != levelHeight - 1)
-                        {
-                            map[x][y] = "|";
-                        }
-                    }
-                    else
-                    {
-                        if (x == 0)
-                        {
-                            map[x][y] = "─";
-                        }
-                        if (x == levelHeight - 1)
-                        {
-                            map[x][y] = "─";
-                        }
-                    }
-                }
-            }
-            return map;
-        }
-
-        public string[][] FrameRoom()
+        public string[][] PrintRoom()
         {
             // Заполняем комнаты на уровне
             foreach (var room in rooms)
@@ -118,19 +78,18 @@ namespace Roguelike.SceneGame.Location
                 {
                     for (int j = room.x; j < room.x + room.width; j++)
                     {
-                        map[i][j] = "█";
+                        map.VisualArr[i][j] = "█";
                     }
                 }
             }
-            return map;
+            return map.VisualArr;
         }
 
         public void PrintLevel()
         {
-            
             PrintPlayer();
             // Печатаем уровень с комнатами
-            foreach (var row in map)
+            foreach (var row in map.VisualArr)
             {
                 foreach (var cell in row)
                 {
@@ -142,16 +101,17 @@ namespace Roguelike.SceneGame.Location
 
         public void PrintPlayer()
         {
-            if (map[rooms[0].y][rooms[0].x] == "█" && !playerSpawn)
+            if (map.VisualArr[rooms[0].y][rooms[0].x] == "█" && !playerSpawn)
             {
                 playerStartX = rooms[0].x;
                 playerStartY = rooms[0].y;
 
-                map[playerStartY][playerStartX] = player1.DrawPlayer();
+                map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
                 playerSpawn = true;
             }
         }
-            public void MovePlayer(ConsoleKey key)
+
+        public void MovePlayer(ConsoleKey key)
         {
 
             if (key == ConsoleKey.DownArrow)
@@ -159,8 +119,8 @@ namespace Roguelike.SceneGame.Location
                 if (isRoom(playerStartX, playerStartY + 1))
                 {
                     playerStartY += 1;
-                    map[playerStartY - 1][playerStartX] = "█";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer();
+                    map.VisualArr[playerStartY - 1][playerStartX] = "█";
+                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
                 }
             }
             if (key == ConsoleKey.UpArrow)
@@ -168,8 +128,8 @@ namespace Roguelike.SceneGame.Location
                 if (isRoom(playerStartX, playerStartY - 1))
                 {
                     playerStartY -= 1;
-                    map[playerStartY + 1][playerStartX] = "█";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer();
+                    map.VisualArr[playerStartY + 1][playerStartX] = "█";
+                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
                 }
             }
             if (key == ConsoleKey.LeftArrow)
@@ -177,8 +137,8 @@ namespace Roguelike.SceneGame.Location
                 if (isRoom(playerStartX - 1, playerStartY))
                 {
                     playerStartX -= 1;
-                    map[playerStartY][playerStartX + 1] = "█";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer();
+                    map.VisualArr[playerStartY][playerStartX + 1] = "█";
+                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer();
                 }
             }
             if (key == ConsoleKey.RightArrow)
@@ -186,15 +146,15 @@ namespace Roguelike.SceneGame.Location
                 if (isRoom(playerStartX + 1, playerStartY))
                 {
                     playerStartX += 1;
-                    map[playerStartY][playerStartX - 1] = "█";
-                    map[playerStartY][playerStartX] = player1.DrawPlayer(); ;
+                    map.VisualArr[playerStartY][playerStartX - 1] = "█";
+                    map.VisualArr[playerStartY][playerStartX] = player1.DrawPlayer(); ;
                 }
             }
         }
 
         public bool isRoom(int x, int y)
         {
-            if (map[y][x] == "█")
+            if (map.VisualArr[y][x] == "█")
             {
                 return true;
             }
