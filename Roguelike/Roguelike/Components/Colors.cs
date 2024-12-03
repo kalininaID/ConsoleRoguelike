@@ -11,5 +11,6 @@ namespace Roguelike
         WHITE = 0,
         RED = 1,
         GRAY = 2,
+        GREEN = 3,
     }
 }

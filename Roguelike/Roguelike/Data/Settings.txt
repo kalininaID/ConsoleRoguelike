@@ -1,5 +1,5 @@
 Player 1
-up: E
+up: W
 left: A
 down: S
 right: D

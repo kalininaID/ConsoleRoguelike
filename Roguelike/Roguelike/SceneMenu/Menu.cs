@@ -70,16 +70,15 @@ namespace Roguelike
                 NewGameMenu manager = new NewGameMenu();
                 manager.Start();
             }
-            
         }
 
         private void HandleInput(ConsoleKey key)
         {
-            if (key == ConsoleKey.DownArrow)
+            if (key == ConsoleKey.DownArrow || key == ConsoleKey.S)
             {
                 selectLine = (selectLine < 2) ? selectLine + 1 : 0;
             }
-            if (key == ConsoleKey.UpArrow)
+            if (key == ConsoleKey.UpArrow || key == ConsoleKey.W)
             {
                 selectLine = (selectLine > 0) ? selectLine - 1 : 2;
             }

@@ -31,6 +31,7 @@ namespace Roguelike.SceneMenu
         private int consoleWidth;
         private int consoleHeight;
 
+        private bool readyP1 = false;
         private bool readyP2 = false;
 
         private Art img = new Art();
@@ -63,6 +64,12 @@ namespace Roguelike.SceneMenu
 
                 fieldP1 = CreatePlayer(fieldP1, "Player 1", true);
                 fieldP2 = CreatePlayer(fieldP2, "Player 2", readyP2, del: true);
+
+                if (readyP1)
+                    PlayerReady(fieldP1);
+
+                if (readyP2)
+                    PlayerReady(fieldP2);
 
                 DisplayMenu();
 
@@ -118,9 +125,27 @@ namespace Roguelike.SceneMenu
                 visualPW = ArrFunc.ArrInArr(visualPW, controlInfo, line: visualPW.Length - 8);
 
                 if (nameP1 == namePlayer)
-                    visualPW = ArrFunc.TextInArr(visualPW, "Нажми Space, если готов!", (visualPW.Length - 2));
+                {
+                    if (!readyP1)
+                    {
+                        visualPW = ArrFunc.TextInArr(visualPW, "Нажми Space, если готов!", (visualPW.Length - 2));
+                    } else
+                    {
+                        visualPW = ArrFunc.TextInArr(visualPW, "Готов!", (visualPW.Length - 2));
+                    }
+                }
                 else
-                    visualPW = ArrFunc.TextInArr(visualPW, "Нажми Enter, если готов!", (visualPW.Length - 2));
+                {
+                    if (!readyP2)
+                    {
+                        visualPW = ArrFunc.TextInArr(visualPW, "Нажми Enter, если готов!", (visualPW.Length - 2));
+                    }
+                    else
+                    {
+                        visualPW = ArrFunc.TextInArr(visualPW, "Готов!", (visualPW.Length - 2));
+                    }
+                }
+
             }
             else
             {
@@ -160,10 +185,12 @@ namespace Roguelike.SceneMenu
             Console.WriteLine($"0 - изменить управление; {changeP2}");
         }
 
-        private string[][] PlayerReady(string[][] playerWindow)
+        private void PlayerReady(Frame field)
         {
-
-            return playerWindow;
+            if (readyP1)
+            {
+                field.Paint(Colors.GREEN);
+            }
         }
 
         private void HandleInput(ConsoleKey key)
@@ -171,7 +198,9 @@ namespace Roguelike.SceneMenu
             if (key == ConsoleKey.Spacebar)
             {
                 int a = 2;
-                //fieldP1.Array = PlayerReady(fieldP1.Array);
+
+                readyP1 = !readyP1;
+                //
                 //закрыть возможности для 1 перснажа пометить что он готов
             }
             if (key == ConsoleKey.Enter)
@@ -181,7 +210,7 @@ namespace Roguelike.SceneMenu
                 //закрыть возможности для 1 перснажа пометить что он готов
             }
 
-            if (key == ConsoleKey.E)
+            if (key == ConsoleKey.E && !readyP2)
             {
                 readyP2 = !readyP2;
                 if (readyP2)
@@ -193,29 +222,29 @@ namespace Roguelike.SceneMenu
                 flagChangeControll = true;
             }
 
-            if (key == ConsoleKey.A)
+            if (key == ConsoleKey.A && !readyP1)
             {
                 MoveCursorCharacter(true, true);
 
                 if (cursorP1 == cursorP2 && readyP2)
                     MoveCursorCharacter(true, true);
             }
-            if (key == ConsoleKey.D)
+            if (key == ConsoleKey.D && !readyP1)
             {
                 MoveCursorCharacter(true, false);
 
-                if (cursorP1 == cursorP2 && readyP2)
+                if (cursorP1 == cursorP2)
                     MoveCursorCharacter(true, false);
             }
 
-            if (key == ConsoleKey.LeftArrow && readyP2)
+            if (key == ConsoleKey.LeftArrow && !readyP2)
             {
                 MoveCursorCharacter(false, true);
 
                 if (cursorP1 == cursorP2)
                     MoveCursorCharacter(false, true);
             }
-            if (key == ConsoleKey.RightArrow && readyP2)
+            if (key == ConsoleKey.RightArrow && !readyP2)
             {
                 MoveCursorCharacter(false, false);
 

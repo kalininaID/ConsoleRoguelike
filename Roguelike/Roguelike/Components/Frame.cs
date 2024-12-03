@@ -101,12 +101,42 @@ namespace Roguelike.Components
                     {
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
+                    else if (ColorsArr[i][j] == 3)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
 
                     Console.Write(VisualArr[i][j]);
                 }
                 Console.WriteLine();
             }
             Console.ResetColor();
+        }
+
+        public void Paint(Colors colorBorder = Colors.WHITE)
+        {
+            for (int i = 0; i < ColorsArr.Length; i++)
+            {
+                for (int j = 0; j < ColorsArr[i].Length; j++)
+                {
+                    if (colorBorder == Colors.WHITE)
+                    {
+                        ColorsArr[i][j] = 0;
+                    }
+                    else if (colorBorder == Colors.RED)
+                    {
+                        ColorsArr[i][j] = 1;
+                    }
+                    else if (colorBorder == Colors.GRAY)
+                    {
+                        ColorsArr[i][j] = 2;
+                    }
+                    else if (colorBorder == Colors.GREEN)
+                    {
+                        ColorsArr[i][j] = 3;
+                    }
+                }
+            }
         }
     }
 }
