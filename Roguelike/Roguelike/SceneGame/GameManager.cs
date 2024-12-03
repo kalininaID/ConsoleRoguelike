@@ -18,18 +18,21 @@ namespace Roguelike
 
         public void Start()
         {
-            Level level = new Level(widhtLevel, heightLevel);
+            Player player1 = new Player(hpPlayer1, DamagePlayer1);
+            Level level = new Level(widhtLevel, heightLevel, player1);
+
             while (true)
             {
                 Console.Clear();
                 level.PrintLevel();
+                level.PrintPlayer();
 
                 var key = Console.ReadKey(true).Key;
-                HandleInput(key);
+                level.MovePlayer(key);
             }
             
 
-            /* Player player1 = new Player(hpPlayer1, DamagePlayer1);
+            /* 
              Level level = new Level(widhtLevel, heightLevel, player1);
 
              level.GenerateLevel(roomCount);

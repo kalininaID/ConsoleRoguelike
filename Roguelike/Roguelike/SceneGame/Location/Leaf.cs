@@ -38,7 +38,6 @@ namespace Roguelike.SceneGame.Location
             {
                 return false;
             }
-
             // Определяем направление разрезания
             // если ширина более чем на 25% больше высоты, то разрезаем вертикально
             // если высота более чем на 25% больше ширины, то разрезаем горизонтально
@@ -71,7 +70,6 @@ namespace Roguelike.SceneGame.Location
                 leftChild = new Leaf(x, y, split, height);
                 rightChild = new Leaf(x + split, y, width - split, height);
             }
-
             return true; // Разрезание выполнено!
         }
 
@@ -95,9 +93,6 @@ namespace Roguelike.SceneGame.Location
                 {
                     List<Room> hallRooms = CreateHall(leftChild.GetRoom(), rightChild.GetRoom());
                     roomsList.AddRange(hallRooms);
-
-
-                    //roomsList.Add(CreateHall(leftChild.GetRoom(), rightChild.GetRoom()));
                 }
             }
             else
@@ -111,7 +106,6 @@ namespace Roguelike.SceneGame.Location
                 room = new Room(x + roomPos.X, y + roomPos.Y, roomSize.X, roomSize.Y);
                 roomsList.Add(room); // Добавляем созданную комнату в список
             }
-
             return roomsList; // Возвращаем список комнат
         }
 
@@ -132,13 +126,11 @@ namespace Roguelike.SceneGame.Location
                 {
                     lRoom = leftChild.GetRoom();
                 }
-
                 // Проверяем правого дочернего листа
                 if (rightChild != null)
                 {
                     rRoom = rightChild.GetRoom();
                 }
-
                 // Если ни один из дочерних листьев не имеет комнаты, возвращаем null
                 if (lRoom == null && rRoom == null)
                 {
@@ -262,23 +254,6 @@ namespace Roguelike.SceneGame.Location
         private int RandomNumber(int min, int max)
         {
             return new Random().Next(min, max);
-        }
-
-        public void Draw(char symbol)
-        {
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
-                    {
-                        Console.SetCursorPosition(x + j, y + i);
-                        Console.Write(symbol);
-                    }
-                }
-            }
-            leftChild?.Draw(symbol);
-            rightChild?.Draw(symbol);
         }
     }
 }
