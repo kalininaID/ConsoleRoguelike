@@ -25,7 +25,7 @@ namespace Roguelike
             {
                 Console.Clear();
                 level.PrintLevel();
-                level.PrintPlayer();
+                //level.PrintPlayer();
 
                 var key = Console.ReadKey(true).Key;
                 level.MovePlayer(key);

@@ -29,7 +29,8 @@ namespace Roguelike.SceneGame.Location
             this.levelHeight = levelHeight;
             this.player1 = player1;
 
-           // map = new Frame(levelWidth, levelHeight);
+            map = FrameLevel();
+            // map = new Frame(levelWidth, levelHeight);
             Generate();
         }
 
@@ -65,12 +66,13 @@ namespace Roguelike.SceneGame.Location
                 }
             }
             rooms = root.CreateRooms();
+            FrameRoom();
         }
 
-        public void PrintLevel()
+        public string[][] FrameLevel() 
         {
             // Создаем рамку уровня
-             map = new string[levelHeight][];
+            map = new string[levelHeight][];
 
             for (int i = 0; i < levelHeight; i++)
             {
@@ -104,7 +106,11 @@ namespace Roguelike.SceneGame.Location
                     }
                 }
             }
+            return map;
+        }
 
+        public string[][] FrameRoom()
+        {
             // Заполняем комнаты на уровне
             foreach (var room in rooms)
             {
@@ -116,7 +122,13 @@ namespace Roguelike.SceneGame.Location
                     }
                 }
             }
+            return map;
+        }
 
+        public void PrintLevel()
+        {
+            
+            PrintPlayer();
             // Печатаем уровень с комнатами
             foreach (var row in map)
             {
