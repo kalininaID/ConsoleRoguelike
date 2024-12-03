@@ -29,13 +29,11 @@ namespace Roguelike.Data
 
             using (StreamWriter writer = new StreamWriter(filePath, true)) // Открываем файл для добавления
             {
-                writer.WriteLine($"Player 1");
-                writer.WriteLine($"id: {idPlayer1}");
+                writer.WriteLine($"idPl1: {idPlayer1}");
 
                 if (idPlayer2 != -1)
                 {
-                    writer.WriteLine($"Player 2");
-                    writer.WriteLine($"id: {idPlayer2}");
+                    writer.WriteLine($"idPl1: {idPlayer2}");
                 }
             }
         }

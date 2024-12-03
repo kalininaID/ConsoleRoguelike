@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{461C6C6C-06D8-4937-A949-F6B1DF0248D5}|Roguelike\\Roguelike.csproj|solutionrelative:roguelike\\scenemenu\\newgamemenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{461C6C6C-06D8-4937-A949-F6B1DF0248D5}|Roguelike\\Roguelike.csproj|d:\\git\\consoleroguelike\\roguelike\\roguelike\\scenegame\\unit\\items.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{461C6C6C-06D8-4937-A949-F6B1DF0248D5}|Roguelike\\Roguelike.csproj|solutionrelative:roguelike\\scenegame\\unit\\items.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{461C6C6C-06D8-4937-A949-F6B1DF0248D5}|Roguelike\\Roguelike.csproj|d:\\git\\consoleroguelike\\roguelike\\roguelike\\scenegame\\location\\itemspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{461C6C6C-06D8-4937-A949-F6B1DF0248D5}|Roguelike\\Roguelike.csproj|solutionrelative:roguelike\\scenegame\\location\\itemspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{461C6C6C-06D8-4937-A949-F6B1DF0248D5}|Roguelike\\Roguelike.csproj|d:\\git\\consoleroguelike\\roguelike\\roguelike\\data\\save.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{461C6C6C-06D8-4937-A949-F6B1DF0248D5}|Roguelike\\Roguelike.csproj|solutionrelative:roguelike\\data\\save.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -32,7 +40,7 @@
               "RelativeDocumentMoniker": "Roguelike\\SceneMenu\\NewGameMenu.cs",
               "ToolTip": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\SceneMenu\\NewGameMenu.cs",
               "RelativeToolTip": "Roguelike\\SceneMenu\\NewGameMenu.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAAwG0AAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAANsAAAAAAAAAAAAkwN0AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-03T02:26:04.588Z",
               "IsPinned": true,
@@ -40,7 +48,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Dialog.cs",
               "DocumentMoniker": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\Components\\Dialog.cs",
               "RelativeDocumentMoniker": "Roguelike\\Components\\Dialog.cs",
@@ -58,13 +66,39 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ItemSpawner.cs",
+              "DocumentMoniker": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\SceneGame\\Location\\ItemSpawner.cs",
+              "RelativeDocumentMoniker": "Roguelike\\SceneGame\\Location\\ItemSpawner.cs",
+              "ToolTip": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\SceneGame\\Location\\ItemSpawner.cs",
+              "RelativeToolTip": "Roguelike\\SceneGame\\Location\\ItemSpawner.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAADgvyUAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-03T13:25:11.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Items.cs",
+              "DocumentMoniker": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\SceneGame\\Unit\\Items.cs",
+              "RelativeDocumentMoniker": "Roguelike\\SceneGame\\Unit\\Items.cs",
+              "ToolTip": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\SceneGame\\Unit\\Items.cs",
+              "RelativeToolTip": "Roguelike\\SceneGame\\Unit\\Items.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAABcAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-03T13:19:27.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Save.cs",
               "DocumentMoniker": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\Data\\Save.cs",
               "RelativeDocumentMoniker": "Roguelike\\Data\\Save.cs",
               "ToolTip": "D:\\Git\\ConsoleRoguelike\\Roguelike\\Roguelike\\Data\\Save.cs",
               "RelativeToolTip": "Roguelike\\Data\\Save.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAqwBMAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAywCMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-03T11:59:36.687Z",
               "EditorCaption": ""
