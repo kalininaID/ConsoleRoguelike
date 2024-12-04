@@ -153,7 +153,7 @@ namespace Roguelike
             string leftKey = controls["left"];
             string rightKey = controls["right"];
 
-            if (key.ToString() == downKey)
+            if (key.ToString() == downKey || (key == ConsoleKey.DownArrow && downKey == "⇩"))
             {
                 if (isRoom(player1_X, player1_Y + 1))
                 {
@@ -161,7 +161,7 @@ namespace Roguelike
                     map.VisualArr[player1_Y - 1][player1_X] = "  ";
                 }
             }
-            else if (key.ToString() == upKey)
+            else if (key.ToString() == upKey || (key == ConsoleKey.UpArrow && upKey == "⇧"))
             {
                 if (isRoom(player1_X, player1_Y - 1))
                 {
@@ -169,7 +169,7 @@ namespace Roguelike
                     map.VisualArr[player1_Y + 1][player1_X] = "  ";
                 }
             }
-            else if (key.ToString() == leftKey)
+            else if (key.ToString() == leftKey || (key == ConsoleKey.LeftArrow && rightKey == "⇨"))
             {
                 if (isRoom(player1_X - 1, player1_Y))
                 {
@@ -177,7 +177,7 @@ namespace Roguelike
                     map.VisualArr[player1_Y][player1_X + 1] = "  ";
                 }
             }
-            else if (key.ToString() == rightKey)
+            else if (key.ToString() == rightKey || (key == ConsoleKey.RightArrow && leftKey == "⇦"))
             {
                 if (isRoom(player1_X + 1, player1_Y))
                 {
@@ -195,7 +195,7 @@ namespace Roguelike
             string leftKey = controls["left"];
             string rightKey = controls["right"];
 
-            if (key.ToString() == downKey)
+            if (key.ToString() == downKey || (key == ConsoleKey.DownArrow && downKey == "⇩"))
             {
                 if (isRoom(player2_X, player2_Y + 1))
                 {
@@ -203,7 +203,7 @@ namespace Roguelike
                     map.VisualArr[player2_Y - 1][player2_X] = "  ";
                 }
             }
-            else if (key.ToString() == upKey)
+            else if (key.ToString() == upKey || (key == ConsoleKey.UpArrow && upKey == "⇧"))
             {
                 if (isRoom(player2_X, player2_Y - 1))
                 {
@@ -211,7 +211,7 @@ namespace Roguelike
                     map.VisualArr[player2_Y + 1][player2_X] = "  ";
                 }
             }
-            else if (key.ToString() == leftKey)
+            else if (key.ToString() == leftKey || (key == ConsoleKey.LeftArrow && rightKey == "⇨"))
             {
                 if (isRoom(player2_X - 1, player2_Y))
                 {
@@ -219,7 +219,7 @@ namespace Roguelike
                     map.VisualArr[player2_Y][player2_X + 1] = "  ";
                 }
             }
-            else if (key.ToString() == rightKey)
+            else if (key.ToString() == rightKey || (key == ConsoleKey.RightArrow && leftKey == "⇦"))
             {
                 if (isRoom(player2_X + 1, player2_Y))
                 {

@@ -5,8 +5,8 @@ down: S
 right: D
 
 Player 2
-up: I
-left: J
-down: K
-right: L
+up: ⇧
+left: ⇦
+down: ⇩
+right: ⇨
 
