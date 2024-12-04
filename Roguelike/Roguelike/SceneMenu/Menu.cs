@@ -76,8 +76,9 @@ namespace Roguelike
             }
 
             if (selectLine == 1) {
-                NewGameMenu manager = new NewGameMenu();
-                manager.Start();
+
+                Lore lore = new Lore();
+                lore.Start();
             }
 
 
