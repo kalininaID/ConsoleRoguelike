@@ -36,10 +36,8 @@ namespace Roguelike
             {
                 return false;
             }
-            // Определяем направление разрезания
-            // если ширина более чем на 25% больше высоты, то разрезаем вертикально
-            // если высота более чем на 25% больше ширины, то разрезаем горизонтально
-            // иначе выбираем направление разрезания случайным образом
+
+            //Определям направление разрезания 
             bool splitH = new Random().NextDouble() > 0.5;
             if (width > height && (width / (double)height) >= 1.25)
             {
@@ -50,14 +48,16 @@ namespace Roguelike
                 splitH = true;
             }
 
+            //Выбираем случайную точку для разрезания
             int max = (splitH ? height : width) - MIN_LEAF_SIZE; // Определяем максимальную высоту или ширину
             if (max <= MIN_LEAF_SIZE)
             {
-                return false; // область слишком мала, больше её делить нельзя...
+                return false; // область слишком мала
             }
 
             int split = RandomNumber(MIN_LEAF_SIZE, max); // Определяемся, где будем разрезать
 
+            //Создаются две новые области с обновленными размерами
             if (splitH)
             {
                 leftChild = new Leaf(x, y, width, split);
@@ -68,7 +68,7 @@ namespace Roguelike
                 leftChild = new Leaf(x, y, split, height);
                 rightChild = new Leaf(x + split, y, width - split, height);
             }
-            return true; // Разрезание выполнено!
+            return true;
         }
 
         public List<Room> CreateRooms()

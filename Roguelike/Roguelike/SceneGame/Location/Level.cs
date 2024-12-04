@@ -107,7 +107,6 @@ namespace Roguelike
 
         public string[][] PrintRoom()
         {
-            // Заполняем комнаты на уровне
             foreach (var room in rooms)
             {
                 for (int i = room.y; i < room.y + room.height; i++)
