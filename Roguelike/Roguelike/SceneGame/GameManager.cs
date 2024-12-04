@@ -1,4 +1,5 @@
 ﻿using Roguelike;
+using Roguelike.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,31 +25,32 @@ namespace Roguelike
 
         private Level level;
 
+        Dictionary<string, string> saveData = new Dictionary<string, string>();
+
         public bool twoPlayer = false;
 
-        public GameManager(bool twoPlayer) 
-        { 
-            this.twoPlayer = twoPlayer;
-
+        public GameManager() 
+        {
+            saveData = Save.Get();
+            this.twoPlayer = saveData.ContainsKey("idPl2");
         }
 
         public void Start()
         {
             var player1Controls = Settings.Get("Player 1");
             var player2Controls = Settings.Get("Player 2");
+
+            Player player1 = new Player(saveData["idPl1"]);
+
             if (twoPlayer)
             {
-                Player player1 = new Player(hpPlayer1, DamagePlayer1);
-                Player player2 = new Player(hpPlayer2, DamagePlayer2);
-
+                Player player2 = new Player(saveData["idPl2"]);
                 level = new Level(widhtLevel, heightLevel, max_leaf, min_leaf, player1, player2);
-            }
-            else 
+            } else
             {
-                Player player1 = new Player(hpPlayer1, DamagePlayer1);
-
                 level = new Level(widhtLevel, heightLevel, max_leaf, min_leaf, player1);
             }
+
 
             while (true)
             {

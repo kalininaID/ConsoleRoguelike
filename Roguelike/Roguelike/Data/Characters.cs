@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,6 +49,16 @@ namespace Roguelike
             }
 
             return characters;
+        }
+
+        public static Dictionary<string, string> GetById(string id)
+        {
+            Dictionary<string, string> character = new Dictionary<string, string>();
+            Dictionary<int, Dictionary<string, string>> characters = Get();
+
+            character = characters[int.Parse(id)];
+
+            return character;
         }
     }
 }

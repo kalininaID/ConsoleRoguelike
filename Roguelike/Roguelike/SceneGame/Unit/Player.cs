@@ -13,11 +13,13 @@ namespace Roguelike
         public int experience;
         public List<Items> Inventory;
 
-        public Player(int hp, int damage)
+        public Player(string id)
         {
-            this.hp = hp;
-            this.damage = damage;
-            icon = "😏";
+            Dictionary<string, string> data = Characters.GetById(id);
+
+            this.hp = int.Parse(data["Живучесть"]);
+            this.damage = int.Parse(data["Сила"]);
+            icon = data["Иконка"];
             level = 1;
             experience = 0;
             Inventory = new List<Items>();

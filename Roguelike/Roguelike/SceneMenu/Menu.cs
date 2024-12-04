@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Roguelike.Components;
+using Roguelike.Data;
 using Roguelike.SceneMenu;
 
 
@@ -12,9 +14,11 @@ namespace Roguelike
         int consoleWidth = Console.WindowWidth;
         bool endWhile = false;
         Art img = new Art();
-
+        private bool isSave;
         public void Start()
         {
+            isSave = Save.HasData();
+
             while (true)
             {
                 Console.Clear();
@@ -53,7 +57,12 @@ namespace Roguelike
 
                 string centeredLine = new string(' ', spacesToAdd) + line;
 
+                if (!isSave && i == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
                 Console.WriteLine(centeredLine);
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("");
             }
         }
@@ -62,13 +71,18 @@ namespace Roguelike
         {
             if (selectLine == 0)
             {
-                GameManager manager = new GameManager(true);
+                GameManager manager = new GameManager();
                 manager.Start();
             }
 
             if (selectLine == 1) {
                 NewGameMenu manager = new NewGameMenu();
                 manager.Start();
+            }
+
+
+            if (selectLine == 2)
+            {
             }
         }
 
@@ -84,7 +98,11 @@ namespace Roguelike
             }
             if (key == ConsoleKey.Enter)
             {
-                endWhile = true;
+                if (!isSave && selectLine == 0)
+                { } else
+                {
+                    endWhile = true;
+                }
             }
         }
     }

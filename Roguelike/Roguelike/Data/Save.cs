@@ -29,13 +29,39 @@ namespace Roguelike.Data
 
             using (StreamWriter writer = new StreamWriter(filePath, true)) // Открываем файл для добавления
             {
+                writer.WriteLine($"lvl: 1");
                 writer.WriteLine($"idPl1: {idPlayer1}");
 
                 if (idPlayer2 != -1)
                 {
-                    writer.WriteLine($"idPl1: {idPlayer2}");
+                    writer.WriteLine($"idPl2: {idPlayer2}");
                 }
             }
+        }
+
+        public static Dictionary<string, string> Get()
+        {
+            Dictionary<string, string> saveData = new Dictionary<string, string>();
+
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath).Close();
+            }
+
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (string line in lines)
+            {
+                var parts = line.Split(new[] { ':' }, 2);
+                if (parts.Length == 2)
+                {
+                    string key = parts[0].Trim();
+                    string value = parts[1].Trim();
+                    saveData[key] = value;
+                }
+            }
+
+            return saveData;
         }
     }
 }

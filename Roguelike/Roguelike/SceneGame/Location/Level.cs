@@ -133,12 +133,16 @@ namespace Roguelike
             {
                 player1_X = rooms[0].x;
                 player1_Y = rooms[0].y;
-
-                player2_X = rooms[0].x + 1;
-                player2_Y = rooms[0].y;
-
                 map.VisualArr[player1_Y][player1_X] = player1.DrawPlayer();
-                map.VisualArr[player2_Y][player2_X] = player2.DrawPlayer();
+
+                if (player2 != null)
+                {
+                    player2_X = rooms[0].x + 1;
+                    player2_Y = rooms[0].y;
+                    map.VisualArr[player2_Y][player2_X] = player2.DrawPlayer();
+
+                }
+
                 playerSpawn = true;
             }
         }
